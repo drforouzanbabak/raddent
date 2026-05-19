@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import type { Patient } from "./google";
+import type { Patient } from "./google_sheet";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
