@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 
 const TITLE = "Árak és szolgáltatások";
 const DESCRIPTION =
-  "Átlátható árak minden kezelésre a budapesti RadDent rendelőjében. Konzultáció, implantátumok, koronák, fehérítés, tömések és még sok más — magyar forintban (HUF).";
+  "Átlátható árak minden kezelésre a szigetszentmiklósi RadDent rendelőjében. Konzultáció, implantátumok, koronák, fehérítés, tömések és még sok más — magyar forintban (HUF).";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
-    "fogászati árak Budapest",
+    "fogászati árak Szigetszentmiklós",
     "fogorvos árak",
     "implantátum ár",
     "fogfehérítés ár",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     "korona ár",
     "fogászati kezelés árak",
     "konzultáció ár fogorvos",
-    "dentist prices Budapest",
-    "dental implant price Budapest",
-    "teeth whitening price Budapest",
+    "dentist prices Szigetszentmiklós",
+    "dental implant price Szigetszentmiklós",
+    "teeth whitening price Szigetszentmiklós",
     "dental crown price",
     "RadDent árlista",
   ],

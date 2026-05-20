@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer";
 import { LanguageProvider } from "@/components/language-provider";
 import { getServicePrices } from "@/actions/google_sheet";
 
-const nunitoSans = Nunito_Sans({subsets:['latin'],variable:'--font-sans'});
+const nunitoSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_NAME = "RadDent — Esztétikai fogászat Budapesten";
+const SITE_NAME = "RadDent — Esztétikai fogászat Szigetszentmiklósban";
 const SITE_DESCRIPTION =
-  "A RadDent egy magán fogászati rendelő Budapesten, Dr. Forouzan Babak vezetésével. Esztétikai fogászat, implantátumok, koronák, fehérítés és megelőző ellátás — modern berendezések, prémium anyagok, nyugodt rendelés.";
+  "A RadDent egy magán fogászati rendelő Szigetszentmiklósban, Dr. Forouzan Babak vezetésével. Esztétikai fogászat, implantátumok, koronák, fehérítés és megelőző ellátás — modern berendezések, prémium anyagok, nyugodt rendelés.";
 
 export const metadata: Metadata = {
   title: {
@@ -34,23 +34,23 @@ export const metadata: Metadata = {
     "RadDent",
     "Dr Babak Forouzan",
     "Dr Forouzan Babak",
-    "fogorvos Budapest",
+    "fogorvos Szigetszentmiklós",
     "magán fogorvos",
-    "esztétikai fogászat Budapest",
-    "fogászat Budapest",
-    "fogorvosi rendelő Budapest",
+    "esztétikai fogászat Szigetszentmiklós",
+    "fogászat Szigetszentmiklós",
+    "fogorvosi rendelő Szigetszentmiklós",
     "fogfehérítés",
     "fogászati implantátum",
     "korona",
     "héj veneer",
     "Semmelweis Egyetem fogorvos",
     "XIV. kerület fogorvos",
-    "dentist Budapest",
-    "private dentist Budapest",
-    "aesthetic dentistry Budapest",
-    "cosmetic dentistry Budapest",
-    "dental implants Budapest",
-    "teeth whitening Budapest",
+    "dentist Szigetszentmiklós",
+    "private dentist Szigetszentmiklós",
+    "aesthetic dentistry Szigetszentmiklós",
+    "cosmetic dentistry Szigetszentmiklós",
+    "dental implants Szigetszentmiklós",
+    "teeth whitening Szigetszentmiklós",
   ],
   authors: [{ name: "Dr Babak Forouzan" }],
   creator: "RadDent",

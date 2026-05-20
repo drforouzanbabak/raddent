@@ -61,11 +61,11 @@ export const MESSAGES = {
     },
     footer: {
       tagline:
-        "Aesthetic dentistry in Budapest. Gentle care, premium materials, the smile you've been waiting for.",
+        "Aesthetic dentistry in Szigetszentmiklós. Gentle care, premium materials, the smile you've been waiting for.",
       services: "Services",
       visitUs: "Visit Us",
       contact: "Contact",
-      hours: "Mon – Fri · 08:00 – 17:00",
+      hours: "Mon – Fri · 09:00 – 19:00",
       copyright: "RadDent Clinic. All rights reserved.",
       privacy: "Privacy",
       terms: "Terms",
@@ -168,7 +168,7 @@ export const MESSAGES = {
       cardEducation: "Semmelweis University · 2014",
       cardSpecialty: "Aesthetic & general dentistry",
       cardLanguages: "Hungarian · English · Farsi",
-      cardLocation: "Budapest, Hungary",
+      cardLocation: "Szigetszentmiklós, Hungary",
       storyEyebrow: "My story",
       storyTitle: "A note from Dr Forouzan.",
       storyP1:
@@ -276,7 +276,7 @@ export const MESSAGES = {
       sections: [
         {
           heading: "What this website is",
-          body: "The RadDent website is an information and booking tool for Dr Babak Forouzan's private dental practice in Budapest. It is not a substitute for clinical advice. Any information shown here is general and may change.",
+          body: "The RadDent website is an information and booking tool for Dr Babak Forouzan's private dental practice in Szigetszentmiklós. It is not a substitute for clinical advice. Any information shown here is general and may change.",
         },
         {
           heading: "Booking an appointment",
@@ -351,8 +351,7 @@ export const MESSAGES = {
         phone: "Phone number is required.",
         phoneCountry: "Phone number must include a country code.",
         phoneInvalid: "Enter a valid phone number.",
-        phoneMobile:
-          "Enter a mobile number — we'll send SMS confirmations.",
+        phoneMobile: "Enter a mobile number — we'll send SMS confirmations.",
         dob: "Date of birth is required.",
         address: "Address is required.",
       },
@@ -653,7 +652,7 @@ export const MESSAGES = {
         },
         {
           heading: "Felelősség és elérhetőség",
-          body: "Mindent megteszünk a weboldal pontosságáért és elérhetőségéért, de nem garantálunk megszakítás nélküli üzemelést, és azt sem, hogy minden részlet mindig naprakész. A weboldalt jelenlegi állapotában (\"as is\") biztosítjuk.",
+          body: 'Mindent megteszünk a weboldal pontosságáért és elérhetőségéért, de nem garantálunk megszakítás nélküli üzemelést, és azt sem, hogy minden részlet mindig naprakész. A weboldalt jelenlegi állapotában ("as is") biztosítjuk.',
         },
         {
           heading: "A feltételek módosítása",
@@ -710,8 +709,7 @@ export const MESSAGES = {
         phone: "A telefonszám megadása kötelező.",
         phoneCountry: "A telefonszámnak tartalmaznia kell az országhívót.",
         phoneInvalid: "Adjon meg egy érvényes telefonszámot.",
-        phoneMobile:
-          "Adjon meg egy mobilszámot — SMS megerősítést küldünk.",
+        phoneMobile: "Adjon meg egy mobilszámot — SMS megerősítést küldünk.",
         dob: "A születési dátum megadása kötelező.",
         address: "A cím megadása kötelező.",
       },

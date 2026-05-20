@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     "fogászati GYIK",
     "fogorvos gyakori kérdések",
     "első fogorvosi vizit",
-    "fogászati sürgősség Budapest",
+    "fogászati sürgősség Szigetszentmiklós",
     "fogászati biztosítás",
     "fájdalommentes fogászat",
-    "dental FAQ Budapest",
-    "first dental visit Budapest",
-    "dental emergency Budapest",
+    "dental FAQ Szigetszentmiklós",
+    "first dental visit Szigetszentmiklós",
+    "dental emergency Szigetszentmiklós",
     "painless dentistry",
     "RadDent kérdések",
   ],
@@ -30,10 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FaqLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function FaqLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

@@ -45,8 +45,9 @@ const initialFormState: FormState = {
   dob: "",
   address: "",
   notes: "",
-  summary: "Consultation",
-  location: "Budapest Clinic",
+  summary: "",
+  location:
+    "2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B. I. emelet 2. ajtó",
   date: "",
   startTime: "",
   endTime: "",
@@ -327,7 +328,11 @@ export default function AppointmentPage() {
       const response = await fetch("/api/appointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, language: lang }),
+        body: JSON.stringify({
+          ...form,
+          summary: `Consultation for ${form.firstName} ${form.lastName}`,
+          language: lang,
+        }),
       });
 
       const result = await response.json();

@@ -121,7 +121,10 @@ export function Footer({ categories }: { categories: string[] }) {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-slate-400" />
-                <span>1214 Budapest, Kossuth Lajos utca 142.</span>
+                <span>
+                  2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B. I. emelet
+                  2. ajtó
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="mt-0.5 size-4 shrink-0 text-slate-400" />

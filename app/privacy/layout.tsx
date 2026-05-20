@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "RadDent adatvédelem",
     "adatvédelmi tájékoztató fogorvos",
     "RadDent privacy policy",
-    "fogorvos adatvédelem Budapest",
+    "fogorvos adatvédelem Szigetszentmiklós",
   ],
   robots: {
     index: true,

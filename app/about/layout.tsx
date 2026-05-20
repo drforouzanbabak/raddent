@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const TITLE = "Dr. Forouzan Babak bemutatkozása";
 const DESCRIPTION =
-  "Ismerje meg Dr. Forouzan Babakot — a Semmelweis Egyetemen végzett fogorvos, aki az esztétikai fogászatra, a gyengéd, fájdalommentes ellátásra és a természetes fogak megőrzésére összpontosít a budapesti RadDent rendelőjében.";
+  "Ismerje meg Dr. Forouzan Babakot — a Semmelweis Egyetemen végzett fogorvos, aki az esztétikai fogászatra, a gyengéd, fájdalommentes ellátásra és a természetes fogak megőrzésére összpontosít a szigetszentmiklósi RadDent rendelőjében.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -12,12 +12,12 @@ export const metadata: Metadata = {
     "Dr Forouzan Babak",
     "Forouzan Babak fogorvos",
     "Semmelweis Egyetem fogorvos",
-    "aesthetic dentist Budapest",
-    "esztétikai fogorvos Budapest",
+    "aesthetic dentist Szigetszentmiklós",
+    "esztétikai fogorvos Szigetszentmiklós",
     "fogorvos bemutatkozás",
-    "Persian dentist Budapest",
-    "perzsa fogorvos Budapest",
-    "Farsi speaking dentist Budapest",
+    "Persian dentist Szigetszentmiklós",
+    "perzsa fogorvos Szigetszentmiklós",
+    "Farsi speaking dentist Szigetszentmiklós",
   ],
   openGraph: {
     title: TITLE,
