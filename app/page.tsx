@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,6 +16,11 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { useT } from "@/components/language-provider";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -54,7 +60,9 @@ const GALLERY = [
   { src: "/office/05.jpg", alt: "Sterilization area" },
 ];
 
-const REVIEWS = [
+type Review = { name: string; text: string };
+
+const FALLBACK_REVIEWS: Review[] = [
   {
     name: "Eszter K.",
     text: "I had been putting off a check-up for years. The team at RadDent made me feel completely at ease — and the result looks beautiful.",
@@ -75,6 +83,34 @@ const REVIEWS = [
 
 export default function Home() {
   const t = useT();
+  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
+
+  useEffect(() => {
+    let ignore = false;
+    (async () => {
+      try {
+        const response = await fetch("/api/reviews");
+        if (!response.ok) return;
+        const data = (await response.json()) as {
+          reviews?: Array<{ reviewerName: string; text: string }>;
+        };
+        if (ignore) return;
+        if (Array.isArray(data.reviews) && data.reviews.length > 0) {
+          setReviews(
+            data.reviews.slice(0, 4).map((r) => ({
+              name: r.reviewerName,
+              text: r.text,
+            })),
+          );
+        }
+      } catch {
+        // keep fallback reviews
+      }
+    })();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   return (
     <main>
@@ -322,34 +358,58 @@ export default function Home() {
           </div>
 
           <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {REVIEWS.map((review) => (
-              <figure
-                key={review.name}
-                className="flex h-full flex-col gap-5 rounded-3xl border border-white/10 bg-white/3 p-6"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-0.5 text-white">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="size-4 fill-white" />
-                    ))}
-                  </div>
-                  <FacebookIcon className="size-4 text-slate-500" />
-                </div>
-                <blockquote className="text-sm leading-6 text-slate-200">
-                  &ldquo;{review.text}&rdquo;
-                </blockquote>
-                <figcaption className="mt-auto flex items-center gap-3 border-t border-white/5 pt-4">
-                  <span className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm font-medium text-white">
-                    {review.name[0]}
-                  </span>
-                  <div className="text-sm">
-                    <p className="font-medium text-white">{review.name}</p>
-                    <p className="text-xs text-slate-500">
-                      {t.home.reviewsViaFacebook}
+            {reviews.map((review) => (
+              <HoverCard key={review.name} openDelay={120} closeDelay={80}>
+                <HoverCardTrigger asChild>
+                  <figure
+                    tabIndex={0}
+                    className="flex h-full cursor-pointer flex-col gap-5 rounded-3xl border border-white/10 bg-white/3 p-6 transition hover:border-white/20 hover:bg-white/5 focus:outline-none focus-visible:border-white/30"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-0.5 text-white">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star key={i} className="size-4 fill-white" />
+                        ))}
+                      </div>
+                      <FacebookIcon className="size-4 text-slate-500" />
+                    </div>
+                    <blockquote className="line-clamp-5 text-sm leading-6 text-slate-200">
+                      &ldquo;{review.text}&rdquo;
+                    </blockquote>
+                    <figcaption className="mt-auto flex items-center gap-3 border-t border-white/5 pt-4">
+                      <span className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm font-medium text-white">
+                        {review.name[0]}
+                      </span>
+                      <div className="text-sm">
+                        <p className="font-medium text-white">{review.name}</p>
+                        <p className="text-xs text-slate-500">
+                          {t.home.reviewsViaFacebook}
+                        </p>
+                      </div>
+                    </figcaption>
+                  </figure>
+                </HoverCardTrigger>
+                <HoverCardContent className="max-h-96 w-80 overflow-y-auto">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <span className="flex size-9 items-center justify-center rounded-full border border-border bg-muted text-sm font-medium text-foreground">
+                        {review.name[0]}
+                      </span>
+                      <div className="text-sm">
+                        <p className="font-medium text-foreground">
+                          {review.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {t.home.reviewsViaFacebook}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-sm leading-6 text-foreground">
+                      &ldquo;{review.text}&rdquo;
                     </p>
                   </div>
-                </figcaption>
-              </figure>
+                </HoverCardContent>
+              </HoverCard>
             ))}
           </div>
         </div>

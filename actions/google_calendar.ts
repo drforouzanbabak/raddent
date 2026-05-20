@@ -251,10 +251,10 @@ export const getCalendarBusyTimes = async (date: string) => {
         Boolean(interval.start) && Boolean(interval.end),
     );
 
-  console.log(
-    `[availability] ${date} – calendarId=${calendarId} events=${events.length} busy=`,
-    busy,
-  );
+  // console.log(
+  //   `[availability] ${date} – calendarId=${calendarId} events=${events.length} busy=`,
+  //   busy,
+  // );
 
   return busy;
 };
