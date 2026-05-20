@@ -56,6 +56,7 @@ export const createPatientCalendarEvent = async (
   endDateTime: string,
   location?: string,
   reminders?: CalendarEventInput["reminders"],
+  language?: string,
 ) => {
   return createCalendarEvent({
     summary,
@@ -77,6 +78,7 @@ export const createPatientCalendarEvent = async (
     extendedProperties: {
       private: {
         patientId: patient.id,
+        ...(language ? { language } : {}),
       },
     },
   });
@@ -163,6 +165,113 @@ export const createCalendarEvent = async (event: CalendarEventInput) => {
   });
 
   return response.data;
+};
+
+const WEEK_HOUR_SLOTS = [
+  "08:00",
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+];
+
+const addHourToTime = (time: string) => {
+  const [hours, minutes] = time.split(":").map(Number);
+  const date = new Date();
+  date.setHours(hours + 1, minutes, 0, 0);
+  const nextHour = date.getHours().toString().padStart(2, "0");
+  const nextMinute = date.getMinutes().toString().padStart(2, "0");
+  return `${nextHour}:${nextMinute}`;
+};
+
+const buildBudapestDateTime = (date: string, time: string) =>
+  `${date}T${time}:00+02:00`;
+
+const rangesOverlap = (
+  startA: string,
+  endA: string,
+  startB: string,
+  endB: string,
+) => {
+  const a0 = Date.parse(startA);
+  const a1 = Date.parse(endA);
+  const b0 = Date.parse(startB);
+  const b1 = Date.parse(endB);
+
+  return a0 < b1 && a1 > b0;
+};
+
+export const getCalendarBusyTimes = async (date: string) => {
+  const calendarId = getCalendarId();
+  const calendar = await getCalendarClient();
+
+  const response = await calendar.events.list({
+    calendarId,
+    timeMin: buildBudapestDateTime(date, "00:00"),
+    timeMax: buildBudapestDateTime(date, "23:59"),
+    timeZone: "Europe/Budapest",
+    singleEvents: true,
+    orderBy: "startTime",
+    showDeleted: false,
+  });
+
+  const events = response.data.items ?? [];
+
+  const busy = events
+    .filter((event) => event.status !== "cancelled")
+    .map((event) => {
+      const start = event.start?.dateTime ?? event.start?.date;
+      const end = event.end?.dateTime ?? event.end?.date;
+      return { start, end };
+    })
+    .filter(
+      (interval): interval is { start: string; end: string } =>
+        Boolean(interval.start) && Boolean(interval.end),
+    );
+
+  console.log(
+    `[availability] ${date} – calendarId=${calendarId} events=${events.length} busy=`,
+    busy,
+  );
+
+  return busy;
+};
+
+export const getCalendarEventsForDate = async (date: string) => {
+  const calendarId = getCalendarId();
+  const calendar = await getCalendarClient();
+
+  const response = await calendar.events.list({
+    calendarId,
+    timeMin: buildBudapestDateTime(date, "00:00"),
+    timeMax: buildBudapestDateTime(date, "23:59"),
+    timeZone: "Europe/Budapest",
+    singleEvents: true,
+    orderBy: "startTime",
+    showDeleted: false,
+  });
+
+  return response.data.items ?? [];
+};
+
+export const getAvailableCalendarTimes = async (date: string) => {
+  const busyTimes = await getCalendarBusyTimes(date);
+
+  return WEEK_HOUR_SLOTS.filter((slot) => {
+    const slotStart = buildBudapestDateTime(date, slot);
+    const slotEnd = buildBudapestDateTime(date, addHourToTime(slot));
+
+    return !busyTimes.some((interval) => {
+      if (!interval.start || !interval.end) {
+        return false;
+      }
+      return rangesOverlap(slotStart, slotEnd, interval.start, interval.end);
+    });
+  });
 };
 
 export const updateCalendarEvent = async (

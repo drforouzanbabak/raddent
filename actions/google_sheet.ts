@@ -3,6 +3,14 @@ import { randomUUID } from "crypto";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const PATIENT_SHEET_NAME = "Sheet1";
+const PRICES_SHEET_NAME = "Sheet2";
+
+export type ServicePrice = {
+  name: string;
+  description?: string;
+  price: string;
+  category: string;
+};
 
 export type Patient = {
   id: string;
@@ -13,6 +21,7 @@ export type Patient = {
   dob?: string;
   address?: string;
   notes?: string;
+  language?: string;
 };
 
 export type NewPatient = Omit<Patient, "id">;
@@ -26,6 +35,7 @@ const patientToRow = (patient: Patient): unknown[] => [
   patient.dob ?? "",
   patient.address ?? "",
   patient.notes ?? "",
+  patient.language ?? "",
 ];
 
 const getGoogleCredentials = () => {
@@ -92,6 +102,85 @@ export const appendPatient = async (patient: NewPatient) => {
 };
 
 export const createPatient = appendPatient;
+
+const rowToPatient = (row: unknown[]): Patient => ({
+  id: String(row[0] ?? ""),
+  firstName: String(row[1] ?? ""),
+  lastName: String(row[2] ?? ""),
+  email: String(row[3] ?? ""),
+  phone: String(row[4] ?? ""),
+  dob: String(row[5] ?? ""),
+  address: String(row[6] ?? ""),
+  notes: String(row[7] ?? ""),
+  language: String(row[8] ?? ""),
+});
+
+const normalizeEmail = (value: string | undefined) =>
+  (value ?? "").trim().toLowerCase();
+const normalizePhone = (value: string | undefined) => (value ?? "").trim();
+
+export const getPatientById = async (id: string): Promise<Patient | null> => {
+  const data = await getGoogleSheetData();
+  const rows = data.values ?? [];
+
+  for (const row of rows) {
+    if (String(row[0] ?? "") === id) {
+      return rowToPatient(row);
+    }
+  }
+
+  return null;
+};
+
+export const getServicePrices = async (): Promise<ServicePrice[]> => {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+  if (!sheetId) {
+    throw new Error("GOOGLE_SHEET_ID is not set");
+  }
+
+  const sheets = await getSheetsClient();
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: sheetId,
+    range: PRICES_SHEET_NAME,
+  });
+
+  const rows = response.data.values ?? [];
+
+  // First row is the header row — skip it.
+  return rows
+    .slice(1)
+    .map((row) => ({
+      name: String(row[0] ?? "").trim(),
+      description: String(row[1] ?? "").trim() || undefined,
+      price: String(row[2] ?? "").trim(),
+      category: String(row[3] ?? "").trim(),
+    }))
+    .filter((service) => service.name);
+};
+
+export const findOrCreatePatient = async (
+  input: NewPatient,
+): Promise<{ patient: Patient; created: boolean }> => {
+  const targetEmail = normalizeEmail(input.email);
+  const targetPhone = normalizePhone(input.phone);
+
+  if (targetEmail && targetPhone) {
+    const data = await getGoogleSheetData();
+    const rows = data.values ?? [];
+
+    for (const row of rows) {
+      if (
+        normalizeEmail(row[3] as string) === targetEmail &&
+        normalizePhone(row[4] as string) === targetPhone
+      ) {
+        return { patient: rowToPatient(row), created: false };
+      }
+    }
+  }
+
+  const patient = await appendPatient(input);
+  return { patient, created: true };
+};
 
 export const updateGoogleSheetData = async (data: unknown[][]) => {
   const sheetId = process.env.GOOGLE_SHEET_ID;
