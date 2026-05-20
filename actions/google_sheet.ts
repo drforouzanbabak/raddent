@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const PATIENT_SHEET_NAME = "Sheet1";
 const PRICES_SHEET_NAME = "Sheet2";
+const BLOCKED_DATES_SHEET_NAME = "Sheet3";
 
 export type ServicePrice = {
   name: string;
@@ -130,6 +131,44 @@ export const getPatientById = async (id: string): Promise<Patient | null> => {
   }
 
   return null;
+};
+
+const normalizeBlockedIso = (raw: string): string | null => {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  const match = trimmed.match(/^(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})$/);
+  if (!match) return null;
+  const [, year, month, day] = match;
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+};
+
+export const getBlockedDates = async (): Promise<string[]> => {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+  if (!sheetId) {
+    throw new Error("GOOGLE_SHEET_ID is not set");
+  }
+
+  try {
+    const sheets = await getSheetsClient();
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: sheetId,
+      range: `${BLOCKED_DATES_SHEET_NAME}!A:A`,
+    });
+
+    const rows = response.data.values ?? [];
+    const dates = rows
+      .map((row) => String(row[0] ?? ""))
+      .map(normalizeBlockedIso)
+      .filter((iso): iso is string => iso !== null);
+
+    return Array.from(new Set(dates));
+  } catch (error: unknown) {
+    console.error(
+      "[blocked-dates] failed to load Sheet3:",
+      (error as Error).message,
+    );
+    return [];
+  }
 };
 
 export const getServicePrices = async (): Promise<ServicePrice[]> => {

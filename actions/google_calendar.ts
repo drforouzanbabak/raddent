@@ -168,24 +168,42 @@ export const createCalendarEvent = async (event: CalendarEventInput) => {
 };
 
 const WEEK_HOUR_SLOTS = [
-  "08:00",
   "09:00",
+  "09:30",
   "10:00",
+  "10:30",
   "11:00",
+  "11:30",
   "12:00",
+  "12:30",
   "13:00",
+  "13:30",
   "14:00",
+  "14:30",
   "15:00",
+  "15:30",
   "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
 ];
 
-const addHourToTime = (time: string) => {
+const SLOT_DURATION_MINUTES = 30;
+
+const addSlotDuration = (time: string) => {
   const [hours, minutes] = time.split(":").map(Number);
-  const date = new Date();
-  date.setHours(hours + 1, minutes, 0, 0);
-  const nextHour = date.getHours().toString().padStart(2, "0");
-  const nextMinute = date.getMinutes().toString().padStart(2, "0");
-  return `${nextHour}:${nextMinute}`;
+  const total = hours * 60 + minutes + SLOT_DURATION_MINUTES;
+  const nextHour = Math.floor(total / 60) % 24;
+  const nextMinute = total % 60;
+  return `${String(nextHour).padStart(2, "0")}:${String(nextMinute).padStart(2, "0")}`;
+};
+
+const isWeekendIso = (iso: string) => {
+  const [y, m, d] = iso.split("-").map(Number);
+  const day = new Date(y, m - 1, d).getDay();
+  return day === 0 || day === 6;
 };
 
 const buildBudapestDateTime = (date: string, time: string) =>
@@ -259,11 +277,15 @@ export const getCalendarEventsForDate = async (date: string) => {
 };
 
 export const getAvailableCalendarTimes = async (date: string) => {
+  if (isWeekendIso(date)) {
+    return [];
+  }
+
   const busyTimes = await getCalendarBusyTimes(date);
 
   return WEEK_HOUR_SLOTS.filter((slot) => {
     const slotStart = buildBudapestDateTime(date, slot);
-    const slotEnd = buildBudapestDateTime(date, addHourToTime(slot));
+    const slotEnd = buildBudapestDateTime(date, addSlotDuration(slot));
 
     return !busyTimes.some((interval) => {
       if (!interval.start || !interval.end) {

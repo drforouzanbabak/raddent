@@ -85,9 +85,32 @@ export default function AppointmentPage() {
     null,
   );
   const [dobOpen, setDobOpen] = useState(false);
+  const [blockedDates, setBlockedDates] = useState<string[]>([]);
+
+  useEffect(() => {
+    let ignore = false;
+    (async () => {
+      try {
+        const response = await fetch("/api/blocked-dates", {
+          cache: "no-store",
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        if (ignore) return;
+        if (Array.isArray(data.blockedDates)) {
+          setBlockedDates(data.blockedDates as string[]);
+        }
+      } catch {
+        // non-fatal — server still enforces blocked dates
+      }
+    })();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const getWeekDays = (weekStartDate: Date) => {
-    return Array.from({ length: 7 }, (_, index) => {
+    return Array.from({ length: 5 }, (_, index) => {
       const date = new Date(weekStartDate);
       date.setDate(date.getDate() + index);
       return date;
@@ -131,13 +154,17 @@ export default function AppointmentPage() {
     });
   };
 
-  const addHour = (time: string) => {
+  const addSlotDuration = (time: string) => {
     const [hours, minutes] = time.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours + 1, minutes, 0, 0);
-    const nextHour = date.getHours().toString().padStart(2, "0");
-    const nextMinute = date.getMinutes().toString().padStart(2, "0");
-    return `${nextHour}:${nextMinute}`;
+    const total = hours * 60 + minutes + 30;
+    const nextHour = Math.floor(total / 60) % 24;
+    const nextMinute = total % 60;
+    return `${String(nextHour).padStart(2, "0")}:${String(nextMinute).padStart(2, "0")}`;
+  };
+
+  const isWeekend = (day: Date) => {
+    const d = day.getDay();
+    return d === 0 || d === 6;
   };
 
   const handleChange = (
@@ -158,7 +185,7 @@ export default function AppointmentPage() {
     setForm((prev) => ({
       ...prev,
       startTime: time,
-      endTime: addHour(time),
+      endTime: addSlotDuration(time),
     }));
   };
 
@@ -197,8 +224,10 @@ export default function AppointmentPage() {
             return true;
           }
 
-          const [slotHour] = slot.split(":").map(Number);
-          return slotHour > now.getHours();
+          const [slotHour, slotMinute] = slot.split(":").map(Number);
+          const slotMinutes = slotHour * 60 + slotMinute;
+          const nowMinutes = now.getHours() * 60 + now.getMinutes();
+          return slotMinutes > nowMinutes;
         });
 
         if (ignore) return;
@@ -346,7 +375,7 @@ export default function AppointmentPage() {
             <div className="space-y-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                  <span className="text-xs uppercase tracking-[0.3em] text-amber-300">
                     {t.appointment.stepOfTwo.replace("{n}", String(step))}
                   </span>
                   <h2 className="mt-2 text-2xl font-semibold text-white">
@@ -368,13 +397,13 @@ export default function AppointmentPage() {
 
               {step === 1 ? (
                 <div className="space-y-6">
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center justify-between gap-4 max-md:flex-col max-md:items-start">
                     <div>
                       <p className="text-sm text-slate-300">
                         {t.appointment.browseWeek}
                       </p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 max-md:self-end">
                       <Button
                         type="button"
                         variant="outline"
@@ -394,7 +423,7 @@ export default function AppointmentPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-7">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
                     {getWeekDays(weekStart).map((day) => {
                       const iso = formatDateIso(day);
                       return (
@@ -409,9 +438,15 @@ export default function AppointmentPage() {
                               endTime: "",
                             }))
                           }
-                          disabled={isPastDay(day)}
+                          disabled={
+                            isPastDay(day) ||
+                            isWeekend(day) ||
+                            blockedDates.includes(iso)
+                          }
                           className={`rounded-[1.75rem] border px-3 py-4 text-left text-sm transition ${
-                            isPastDay(day)
+                            isPastDay(day) ||
+                            isWeekend(day) ||
+                            blockedDates.includes(iso)
                               ? "cursor-not-allowed border-white/10 bg-slate-900/60 text-slate-500"
                               : form.date === iso
                                 ? "cursor-pointer border-white bg-white/10 text-white"
@@ -456,7 +491,7 @@ export default function AppointmentPage() {
                         {availabilityError}
                       </div>
                     ) : availableTimes.length > 0 ? (
-                      <div className="grid gap-3 sm:grid-cols-3">
+                      <div className="grid max-h-80 grid-cols-2 gap-3 overflow-y-auto pr-1 sm:max-h-none sm:grid-cols-3 sm:overflow-visible sm:pr-0">
                         {availableTimes.map((slot) => (
                           <button
                             key={slot}
@@ -468,7 +503,7 @@ export default function AppointmentPage() {
                                 : "cursor-pointer border-white/10 bg-white/3 text-slate-200 hover:border-white/20"
                             }`}
                           >
-                            {slot} – {addHour(slot)}
+                            {slot} – {addSlotDuration(slot)}
                           </button>
                         ))}
                       </div>

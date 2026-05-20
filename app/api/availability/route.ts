@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAvailableCalendarTimes } from "@/actions/google_calendar";
+import { getBlockedDates } from "@/actions/google_sheet";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,11 @@ export async function GET(request: Request) {
   }
 
   try {
+    const blockedDates = await getBlockedDates();
+    if (blockedDates.includes(date)) {
+      return NextResponse.json({ availableTimes: [], blocked: true });
+    }
+
     const availableTimes = await getAvailableCalendarTimes(date);
 
     return NextResponse.json({ availableTimes });
