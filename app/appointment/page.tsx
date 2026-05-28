@@ -330,7 +330,7 @@ export default function AppointmentPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
-          summary: `Consultation for ${form.firstName} ${form.lastName}`,
+          summary: `${form.firstName} ${form.lastName}`,
           language: lang,
         }),
       });

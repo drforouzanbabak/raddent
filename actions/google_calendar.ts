@@ -1,7 +1,33 @@
 import { google } from "googleapis";
 import type { Patient } from "./google_sheet";
+import { normalizeSmsLang, type SmsLang } from "@/lib/sms-templates";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
+
+const CLINIC_PHONE = "+36 70 746 0776";
+
+const DESCRIPTION_STRINGS: Record<
+  SmsLang,
+  { name: string; notes: string; contact: (phone: string) => string }
+> = {
+  en: {
+    name: "Name",
+    notes: "Notes",
+    contact: (phone) => `To reschedule or cancel, call the clinic: ${phone}`,
+  },
+  hu: {
+    name: "Név",
+    notes: "Megjegyzések",
+    contact: (phone) =>
+      `Időpont módosításához vagy lemondásához hívja a rendelőt: ${phone}`,
+  },
+  fa: {
+    name: "نام",
+    notes: "یادداشت‌ها",
+    contact: (phone) =>
+      `برای تغییر یا لغو وقت، با کلینیک تماس بگیرید: ${phone}`,
+  },
+};
 
 export type CalendarAttendee = {
   email: string;
@@ -31,20 +57,20 @@ export type CalendarEventInput = {
 
 export type CalendarEventUpdate = Partial<CalendarEventInput>;
 
-const buildPatientDescription = (patient: Patient): string => {
+const buildPatientDescription = (
+  patient: Patient,
+  language?: string,
+): string => {
+  const strings = DESCRIPTION_STRINGS[normalizeSmsLang(language)];
   const lines: string[] = [];
 
-  if (patient.firstName || patient.lastName) {
-    lines.push(
-      `Name: ${[patient.firstName, patient.lastName].filter(Boolean).join(" ")}`,
-    );
-  }
-  if (patient.id) lines.push(`Patient ID: ${patient.id}`);
-  if (patient.email) lines.push(`Email: ${patient.email}`);
-  if (patient.phone) lines.push(`Phone: ${patient.phone}`);
-  if (patient.dob) lines.push(`DOB: ${patient.dob}`);
-  if (patient.address) lines.push(`Address: ${patient.address}`);
-  if (patient.notes) lines.push(`Notes: ${patient.notes}`);
+  const fullName = [patient.firstName, patient.lastName]
+    .filter(Boolean)
+    .join(" ");
+  if (fullName) lines.push(`${strings.name}: ${fullName}`);
+  if (patient.notes) lines.push(`${strings.notes}: ${patient.notes}`);
+  lines.push("");
+  lines.push(strings.contact(CLINIC_PHONE));
 
   return lines.join("\n");
 };
@@ -60,7 +86,7 @@ export const createPatientCalendarEvent = async (
 ) => {
   return createCalendarEvent({
     summary,
-    description: buildPatientDescription(patient),
+    description: buildPatientDescription(patient, language),
     location,
     startDateTime,
     endDateTime,

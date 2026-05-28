@@ -98,7 +98,7 @@ export const appendPatient = async (patient: NewPatient) => {
     ...patient,
   };
 
-  await appendGoogleSheetRow(patientToRow(newPatient));
+  await appendGoogleSheetRow([...patientToRow(newPatient), 1]);
   return newPatient;
 };
 
@@ -118,7 +118,39 @@ const rowToPatient = (row: unknown[]): Patient => ({
 
 const normalizeEmail = (value: string | undefined) =>
   (value ?? "").trim().toLowerCase();
-const normalizePhone = (value: string | undefined) => (value ?? "").trim();
+const normalizePhone = (value: string | undefined) =>
+  (value ?? "").replace(/[\s\-()]+/g, "");
+
+const PATIENT_BOOKINGS_COLUMN = "J";
+
+const incrementPatientBookings = async (
+  rowIndex: number,
+): Promise<number> => {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+  if (!sheetId) {
+    throw new Error("GOOGLE_SHEET_ID is not set");
+  }
+
+  const sheets = await getSheetsClient();
+  const sheetRow = rowIndex + 1;
+  const range = `${PATIENT_SHEET_NAME}!${PATIENT_BOOKINGS_COLUMN}${sheetRow}`;
+
+  const current = await sheets.spreadsheets.values.get({
+    spreadsheetId: sheetId,
+    range,
+  });
+  const previous = Number(current.data.values?.[0]?.[0] ?? 0) || 0;
+  const next = previous + 1;
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: sheetId,
+    range,
+    valueInputOption: "USER_ENTERED",
+    requestBody: { values: [[next]] },
+  });
+
+  return next;
+};
 
 export const getPatientById = async (id: string): Promise<Patient | null> => {
   const data = await getGoogleSheetData();
@@ -142,7 +174,36 @@ const normalizeBlockedIso = (raw: string): string | null => {
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 };
 
-export const getBlockedDates = async (): Promise<string[]> => {
+const parseHourMinute = (raw: string): number | null => {
+  const match = raw.trim().match(/^(\d{1,2})(?::(\d{2}))?$/);
+  if (!match) return null;
+  const hours = Number(match[1]);
+  const minutes = match[2] ? Number(match[2]) : 0;
+  if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59) return null;
+  return hours * 60 + minutes;
+};
+
+const parseBlockedTimeRange = (
+  raw: string,
+): { startMinutes: number; endMinutes: number } | null => {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  const parts = trimmed.split(/\s*-\s*/);
+  if (parts.length !== 2) return null;
+  const startMinutes = parseHourMinute(parts[0]);
+  const endMinutes = parseHourMinute(parts[1]);
+  if (startMinutes === null || endMinutes === null) return null;
+  if (endMinutes <= startMinutes) return null;
+  return { startMinutes, endMinutes };
+};
+
+export type BlockedSlot = {
+  date: string;
+  startMinutes?: number;
+  endMinutes?: number;
+};
+
+export const getBlockedSlots = async (): Promise<BlockedSlot[]> => {
   const sheetId = process.env.GOOGLE_SHEET_ID;
   if (!sheetId) {
     throw new Error("GOOGLE_SHEET_ID is not set");
@@ -152,16 +213,25 @@ export const getBlockedDates = async (): Promise<string[]> => {
     const sheets = await getSheetsClient();
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
-      range: `${BLOCKED_DATES_SHEET_NAME}!A:A`,
+      range: `${BLOCKED_DATES_SHEET_NAME}!A:B`,
     });
 
     const rows = response.data.values ?? [];
-    const dates = rows
-      .map((row) => String(row[0] ?? ""))
-      .map(normalizeBlockedIso)
-      .filter((iso): iso is string => iso !== null);
+    const slots: BlockedSlot[] = [];
 
-    return Array.from(new Set(dates));
+    for (const row of rows) {
+      const date = normalizeBlockedIso(String(row[0] ?? ""));
+      if (!date) continue;
+
+      const range = parseBlockedTimeRange(String(row[1] ?? ""));
+      if (range) {
+        slots.push({ date, ...range });
+      } else {
+        slots.push({ date });
+      }
+    }
+
+    return slots;
   } catch (error: unknown) {
     console.error(
       "[blocked-dates] failed to load Sheet3:",
@@ -169,6 +239,14 @@ export const getBlockedDates = async (): Promise<string[]> => {
     );
     return [];
   }
+};
+
+export const getBlockedDates = async (): Promise<string[]> => {
+  const slots = await getBlockedSlots();
+  const fullDay = slots
+    .filter((slot) => slot.startMinutes === undefined)
+    .map((slot) => slot.date);
+  return Array.from(new Set(fullDay));
 };
 
 export const getServicePrices = async (): Promise<ServicePrice[]> => {
@@ -199,7 +277,7 @@ export const getServicePrices = async (): Promise<ServicePrice[]> => {
 
 export const findOrCreatePatient = async (
   input: NewPatient,
-): Promise<{ patient: Patient; created: boolean }> => {
+): Promise<{ patient: Patient; created: boolean; bookings: number }> => {
   const targetEmail = normalizeEmail(input.email);
   const targetPhone = normalizePhone(input.phone);
 
@@ -207,18 +285,20 @@ export const findOrCreatePatient = async (
     const data = await getGoogleSheetData();
     const rows = data.values ?? [];
 
-    for (const row of rows) {
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
       if (
         normalizeEmail(row[3] as string) === targetEmail &&
         normalizePhone(row[4] as string) === targetPhone
       ) {
-        return { patient: rowToPatient(row), created: false };
+        const bookings = await incrementPatientBookings(i);
+        return { patient: rowToPatient(row), created: false, bookings };
       }
     }
   }
 
   const patient = await appendPatient(input);
-  return { patient, created: true };
+  return { patient, created: true, bookings: 1 };
 };
 
 export const updateGoogleSheetData = async (data: unknown[][]) => {
