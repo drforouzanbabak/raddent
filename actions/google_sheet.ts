@@ -119,7 +119,7 @@ const rowToPatient = (row: unknown[]): Patient => ({
 const normalizeEmail = (value: string | undefined) =>
   (value ?? "").trim().toLowerCase();
 const normalizePhone = (value: string | undefined) =>
-  (value ?? "").replace(/[\s\-()]+/g, "");
+  (value ?? "").replace(/\D+/g, "");
 
 const PATIENT_BOOKINGS_COLUMN = "J";
 
@@ -288,8 +288,8 @@ export const findOrCreatePatient = async (
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       if (
-        normalizeEmail(row[3] as string) === targetEmail &&
-        normalizePhone(row[4] as string) === targetPhone
+        normalizeEmail(String(row[3] ?? "")) === targetEmail &&
+        normalizePhone(String(row[4] ?? "")) === targetPhone
       ) {
         const bookings = await incrementPatientBookings(i);
         return { patient: rowToPatient(row), created: false, bookings };

@@ -31,6 +31,7 @@ type FormState = {
   date: string;
   startTime: string;
   endTime: string;
+  consent: boolean;
 };
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
@@ -51,6 +52,7 @@ const initialFormState: FormState = {
   date: "",
   startTime: "",
   endTime: "",
+  consent: false,
 };
 
 const formatDateIso = (date: Date) => {
@@ -299,6 +301,8 @@ export default function AppointmentPage() {
 
     if (!state.dob.trim()) next.dob = e.dob;
     if (!state.address.trim()) next.address = e.address;
+
+    if (!state.consent) next.consent = e.consent;
 
     return next;
   };
@@ -738,6 +742,47 @@ export default function AppointmentPage() {
                       placeholder={t.appointment.notesPlaceholder}
                     />
                   </label>
+
+                  <div className="space-y-2">
+                    <label className="flex items-start gap-3 text-sm">
+                      <input
+                        type="checkbox"
+                        name="consent"
+                        checked={form.consent}
+                        onChange={(event) => {
+                          const checked = event.target.checked;
+                          setForm((prev) => ({ ...prev, consent: checked }));
+                          if (checked) {
+                            setErrors((prev) => {
+                              if (!prev.consent) return prev;
+                              const next = { ...prev };
+                              delete next.consent;
+                              return next;
+                            });
+                          }
+                        }}
+                        aria-invalid={!!errors.consent}
+                        className="mt-1 size-4 shrink-0 cursor-pointer rounded border border-input bg-transparent accent-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      />
+                      <span className="text-slate-300">
+                        {t.appointment.consentBefore}
+                        <a
+                          href="/privacy"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline underline-offset-2 hover:text-white"
+                        >
+                          {t.appointment.consentLink}
+                        </a>
+                        {t.appointment.consentAfter}
+                      </span>
+                    </label>
+                    {errors.consent ? (
+                      <span className="block text-xs text-rose-300">
+                        {errors.consent}
+                      </span>
+                    ) : null}
+                  </div>
 
                   <Button
                     type="submit"

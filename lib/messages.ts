@@ -237,29 +237,45 @@ export const MESSAGES = {
     privacy: {
       eyebrow: "Privacy",
       title: "Privacy Policy",
-      lastUpdated: "Last updated: 20 May 2026",
+      lastUpdated: "Last updated: 28 May 2026",
       intro:
-        "RadDent is a private dental practice run by Dr Babak Forouzan. We respect your privacy and only collect the information necessary to book and run your appointment.",
+        "RadDent is a private dental practice run by Dr Babak Forouzan. We respect your privacy and only collect the information necessary to book and provide your dental care. This notice explains what we collect, why, on what legal basis, who has access, how long we keep it, and the rights you have under the EU General Data Protection Regulation (GDPR) and Hungarian data protection law.",
       sections: [
         {
+          heading: "Data controller",
+          body: "The data controller is Dr Babak Forouzan, operating as RadDent at 2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B., 1st floor, door 2, Hungary. For any privacy matter you can reach us at drforouzanbabak@gmail.com or +36 70 746 0776.",
+        },
+        {
           heading: "What we collect",
-          body: "We only collect the information you enter into the booking form: your first and last name, email address, phone number, date of birth, postal address, any notes you choose to share, and your selected interface language. We do not run analytics, advertising trackers, or third-party cookies. Your selected language is stored in your browser's localStorage so the site remembers your preference between visits.",
+          body: "We only collect the information you enter into the booking form: your first and last name, email address, phone number, date of birth, postal address, any notes you choose to share, and your selected interface language. Some of this data — your date of birth, and anything health-related you write in the notes field — is treated as special-category health data under GDPR Article 9, and we process it solely for the purpose of providing your dental care. We do not run analytics, advertising trackers, or third-party cookies. Your selected language is stored in your browser's localStorage so the site remembers your preference between visits.",
         },
         {
           heading: "How we use your information",
           body: "Your details are used to create your appointment in Google Calendar, to keep a patient record in a private Google Sheet so that we remember you on your next visit, to send a confirmation SMS through Infobip immediately after booking, and to send a reminder SMS the day before your appointment.",
         },
         {
+          heading: "Legal basis for processing",
+          body: "We process your personal data on the following legal bases under GDPR: (a) performance of a contract and pre-contractual steps at your request — Article 6(1)(b) — to schedule and provide the appointment you have asked for; (b) provision of healthcare — Article 9(2)(h) — for special-category health data such as your date of birth and any clinical information in the notes field; (c) legitimate interests — Article 6(1)(f) — to send you an appointment reminder SMS the day before your visit, so you don't miss your slot; (d) legal obligation — Article 6(1)(c) — to retain medical records for the period required by Hungarian healthcare law.",
+        },
+        {
           heading: "Who has access",
-          body: "Only Dr Forouzan has access to your patient record. The only third parties involved are Google (Sheets and Calendar) and Infobip (SMS delivery). These providers process the data on our behalf and are subject to their own privacy policies.",
+          body: "Only Dr Forouzan has access to your patient record. The only third parties involved are Google (Sheets and Calendar) and Infobip (SMS delivery). These providers act as data processors on our behalf under written data processing agreements and are subject to their own privacy policies.",
+        },
+        {
+          heading: "International transfers",
+          body: "Google may process some of your data on servers located outside the European Economic Area. Where this happens, Google relies on the EU-US Data Privacy Framework and the European Commission's Standard Contractual Clauses to provide a level of protection equivalent to that required by GDPR. Infobip processes data within the EEA.",
         },
         {
           heading: "How long we keep your data",
-          body: "We keep your patient record indefinitely so that we can provide continuity of care if you return. You can ask us to delete it at any time and we will remove it within a reasonable period.",
+          body: "Hungarian healthcare law — Act XLVII of 1997 on the Processing and Protection of Health and Related Personal Data (Eüak. tv.) — requires us to retain medical documentation for at least 30 years from the date it is recorded, and at least 50 years for imaging records. We keep your patient record for these statutory periods. Non-medical contact information that is not part of the medical record will be deleted on your request. After the statutory retention period, records are securely deleted or fully anonymised.",
         },
         {
           heading: "Your rights",
-          body: "You can ask for a copy of the personal data we hold about you, ask us to correct it, or ask us to delete it. The simplest way is to email us — see Contact below.",
+          body: "Under GDPR you have the right to request access to your personal data, to ask for it to be corrected, and — subject to the statutory retention period for medical records — to ask for it to be deleted or for processing to be restricted. You may also object to processing based on legitimate interests (for example, our appointment reminders). To exercise any of these rights, email us — see Contact below.",
+        },
+        {
+          heading: "Right to lodge a complaint",
+          body: "If you believe we have mishandled your personal data, you have the right to lodge a complaint with the Hungarian National Authority for Data Protection and Freedom of Information (NAIH): H-1055 Budapest, Falk Miksa utca 9-11; ugyfelszolgalat@naih.hu; +36 1 391 1400; naih.hu.",
         },
         {
           heading: "Contact",
@@ -343,6 +359,10 @@ export const MESSAGES = {
       summaryTime: "Time",
       confirmBooking: "Confirm Booking",
       submitting: "Booking…",
+      consentBefore: "I have read and accept the ",
+      consentLink: "Privacy Policy",
+      consentAfter:
+        ", and I agree to RadDent processing my personal and health-related data to schedule and provide my dental appointment.",
       errorRequired: {
         firstName: "First name is required.",
         lastName: "Last name is required.",
@@ -354,6 +374,7 @@ export const MESSAGES = {
         phoneMobile: "Enter a mobile number — we'll send SMS confirmations.",
         dob: "Date of birth is required.",
         address: "Address is required.",
+        consent: "You must accept the Privacy Policy to book an appointment.",
       },
       toastFixErrors: "Please fix the errors below.",
       toastErrorsSingular: "1 field needs your attention.",
@@ -593,29 +614,45 @@ export const MESSAGES = {
     privacy: {
       eyebrow: "Adatvédelem",
       title: "Adatvédelmi tájékoztató",
-      lastUpdated: "Utolsó frissítés: 2026. május 20.",
+      lastUpdated: "Utolsó frissítés: 2026. május 28.",
       intro:
-        "A RadDent Dr. Forouzan Babak magán fogászati rendelője. Tiszteletben tartjuk a magánéletét, és csak az időpontfoglaláshoz és a kezelés lebonyolításához feltétlenül szükséges adatokat gyűjtjük.",
+        "A RadDent Dr. Forouzan Babak magán fogászati rendelője. Tiszteletben tartjuk a magánéletét, és csak az időpontfoglaláshoz és a fogászati ellátás biztosításához feltétlenül szükséges adatokat gyűjtjük. Ez a tájékoztató ismerteti, milyen adatokat kezelünk, milyen célból és jogalapon, ki fér hozzá, meddig őrizzük azokat, valamint az Önt megillető jogokat az EU általános adatvédelmi rendelete (GDPR) és a magyar adatvédelmi jogszabályok szerint.",
       sections: [
         {
+          heading: "Adatkezelő",
+          body: "Az adatkezelő Dr. Forouzan Babak, aki RadDent néven a 2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B. I. emelet 2. ajtó címen végzi tevékenységét. Adatvédelemmel kapcsolatos kérdésével a drforouzanbabak@gmail.com címen vagy a +36 70 746 0776 telefonszámon érhet el minket.",
+        },
+        {
           heading: "Milyen adatokat kezelünk",
-          body: "Csak az időpontfoglaló űrlapon megadott adatokat gyűjtjük: keresztnév és vezetéknév, e-mail cím, telefonszám, születési dátum, lakcím, az opcionális megjegyzések, valamint a kiválasztott felület-nyelv. Nem használunk analitikai vagy hirdetési követőket, sem harmadik féltől származó sütiket. A nyelvi beállítást a böngészője localStorage-ában tároljuk, hogy a következő látogatáskor is emlékezzünk rá.",
+          body: "Csak az időpontfoglaló űrlapon megadott adatokat gyűjtjük: keresztnév és vezetéknév, e-mail cím, telefonszám, születési dátum, lakcím, az opcionális megjegyzések, valamint a kiválasztott felület-nyelv. Ezen adatok egy része — a születési dátum és a megjegyzésekbe írt, egészségi állapotra vonatkozó információ — a GDPR 9. cikke szerinti különleges kategóriájú, egészségügyi adatnak minősül, és kizárólag az Ön fogászati ellátásának biztosítása céljából kezeljük. Nem használunk analitikai vagy hirdetési követőket, sem harmadik féltől származó sütiket. A nyelvi beállítást a böngészője localStorage-ában tároljuk, hogy a következő látogatáskor is emlékezzünk rá.",
         },
         {
           heading: "Hogyan használjuk az adatait",
           body: "Az adatait az időpont létrehozására használjuk a Google Naptárban, egy privát Google Sheet páciensnyilvántartás vezetésére, hogy a következő látogatáskor is emlékezzünk Önre, megerősítő SMS küldésére az Infobip szolgáltatáson keresztül közvetlenül a foglalás után, valamint emlékeztető SMS küldésére az időpontot megelőző napon.",
         },
         {
+          heading: "Az adatkezelés jogalapja",
+          body: "Személyes adatait a GDPR alábbi jogalapjai alapján kezeljük: (a) szerződés teljesítése és a szerződéskötést megelőző lépések megtétele az Ön kérésére — 6. cikk (1) bekezdés b) pont — az Ön által kért időpont biztosításához; (b) egészségügyi ellátás nyújtása — 9. cikk (2) bekezdés h) pont — a különleges kategóriájú egészségügyi adatok kezeléséhez (születési dátum, a megjegyzésekben szereplő klinikai információk); (c) jogos érdek — 6. cikk (1) bekezdés f) pont — az időpontot megelőző napon küldött emlékeztető SMS célja, hogy ne maradjon le a foglalt időpontról; (d) jogi kötelezettség teljesítése — 6. cikk (1) bekezdés c) pont — az egészségügyi dokumentáció magyar jogszabályok által előírt megőrzése.",
+        },
+        {
           heading: "Ki fér hozzá",
-          body: "A páciensnyilvántartásához kizárólag Dr. Forouzan fér hozzá. A folyamatban érintett harmadik felek a Google (Sheets és Calendar) és az Infobip (SMS-küldés). Ezek a szolgáltatók nevünkben kezelik az adatokat, és saját adatvédelmi szabályzatuk vonatkozik rájuk.",
+          body: "A páciensnyilvántartásához kizárólag Dr. Forouzan fér hozzá. A folyamatban érintett harmadik felek a Google (Sheets és Calendar) és az Infobip (SMS-küldés). Ezek a szolgáltatók írásos adatfeldolgozási szerződés alapján, adatfeldolgozóként nevünkben kezelik az adatokat, és saját adatvédelmi szabályzatuk vonatkozik rájuk.",
+        },
+        {
+          heading: "Adattovábbítás harmadik országba",
+          body: "A Google bizonyos esetekben az Európai Gazdasági Térségen (EGT) kívüli szervereken is kezelheti az adatait. Ilyen esetben a Google az EU–USA Adatvédelmi Keretrendszerre (EU-US Data Privacy Framework) és az Európai Bizottság által elfogadott Általános Szerződési Feltételekre (SCC) támaszkodik, amelyek a GDPR-ral egyenértékű védelmi szintet biztosítanak. Az Infobip az EGT-n belül kezeli az adatokat.",
         },
         {
           heading: "Meddig őrizzük az adatait",
-          body: "A páciensnyilvántartást határozatlan ideig megőrizzük, hogy a folyamatos ellátást biztosíthassuk a visszatérő látogatások során. Bármikor kérheti annak törlését, és ésszerű időn belül eltávolítjuk.",
+          body: "A magyar egészségügyi jogszabályok — különösen az egészségügyi és a hozzájuk kapcsolódó személyes adatok kezeléséről szóló 1997. évi XLVII. törvény (Eüak. tv.) — előírják, hogy az egészségügyi dokumentációt legalább 30 évig, képalkotó felvételeket legalább 50 évig meg kell őriznünk a felvétel keletkezésétől számítva. Páciensnyilvántartását ezekre a törvényi időtartamokra őrizzük meg. Az egészségügyi dokumentációhoz nem tartozó kapcsolattartási adatokat kérésére töröljük. A törvényi megőrzési idő lejártát követően a nyilvántartásokat biztonságosan töröljük vagy teljes mértékben anonimizáljuk.",
         },
         {
           heading: "Az Ön jogai",
-          body: "Kérheti az Önről tárolt személyes adatok másolatát, kérheti azok javítását, illetve törlését. A legegyszerűbb módja, ha e-mailben jelez nekünk — lásd lent a Kapcsolat részt.",
+          body: "A GDPR alapján jogosult személyes adataihoz való hozzáférést kérni, javításukat kezdeményezni, valamint — az egészségügyi dokumentációra vonatkozó kötelező megőrzési időre figyelemmel — kérni a törlésüket vagy az adatkezelés korlátozását. A jogos érdeken alapuló adatkezelés (például az emlékeztető SMS) ellen tiltakozhat. Jogainak gyakorlásához írjon nekünk a lenti Kapcsolat részben megadott elérhetőségre.",
+        },
+        {
+          heading: "Panasztételi jog",
+          body: "Ha úgy érzi, hogy személyes adatainak kezelése során jogsértés történt, panaszt nyújthat be a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH): 1055 Budapest, Falk Miksa utca 9-11.; ugyfelszolgalat@naih.hu; +36 1 391 1400; naih.hu.",
         },
         {
           heading: "Kapcsolat",
@@ -701,6 +738,10 @@ export const MESSAGES = {
       summaryTime: "Idő",
       confirmBooking: "Foglalás megerősítése",
       submitting: "Foglalás folyamatban…",
+      consentBefore: "Elolvastam és elfogadom az ",
+      consentLink: "adatvédelmi tájékoztatót",
+      consentAfter:
+        ", és hozzájárulok ahhoz, hogy a RadDent személyes és egészségügyi adataimat a fogászati időpont egyeztetése és biztosítása céljából kezelje.",
       errorRequired: {
         firstName: "A keresztnév megadása kötelező.",
         lastName: "A vezetéknév megadása kötelező.",
@@ -712,6 +753,8 @@ export const MESSAGES = {
         phoneMobile: "Adjon meg egy mobilszámot — SMS megerősítést küldünk.",
         dob: "A születési dátum megadása kötelező.",
         address: "A cím megadása kötelező.",
+        consent:
+          "Az időpontfoglaláshoz el kell fogadnia az adatvédelmi tájékoztatót.",
       },
       toastFixErrors: "Kérjük, javítsa az alábbi hibákat.",
       toastErrorsSingular: "1 mezőre figyelmet kell fordítania.",
