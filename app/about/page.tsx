@@ -53,11 +53,11 @@ export default function AboutPage() {
             <div className="space-y-5">
               <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
                 <Image
-                  src="/about.png"
+                  src="/my-photo.jpg"
                   alt="Dr Babak Forouzan, Lead Dentist at RadDent"
                   fill
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-top"
+                  className="object-cover"
                   priority
                 />
               </div>

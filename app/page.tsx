@@ -49,15 +49,23 @@ function MessengerIcon({ className }: { className?: string }) {
   );
 }
 
-const SERVICE_ICONS = [Crown, Smile, Sparkles, Stethoscope, HeartPulse, ShieldCheck];
+const SERVICE_ICONS = [
+  Crown,
+  Smile,
+  Sparkles,
+  Stethoscope,
+  HeartPulse,
+  ShieldCheck,
+];
 const REASON_ICONS = [Gem, Stethoscope, Sparkles];
 
 const GALLERY = [
-  { src: "/office/01.jpg", alt: "Reception desk and waiting area" },
-  { src: "/office/02.jpeg", alt: "Treatment suite with chair" },
-  { src: "/office/03.jpg", alt: "3D imaging room" },
-  { src: "/office/04.jpg", alt: "Consultation lounge" },
-  { src: "/office/05.jpg", alt: "Sterilization area" },
+  { src: "/office/06.jpg", alt: "" },
+  { src: "/office/07.jpg", alt: "" },
+  { src: "/office/03.jpg", alt: "" },
+  { src: "/office/04.jpg", alt: "" },
+  { src: "/office/05.jpg", alt: "" },
+  // { src: "/office/07.jpg", alt: "" },
 ];
 
 type Review = { name: string; text: string };
