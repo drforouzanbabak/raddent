@@ -185,14 +185,26 @@ export default function Home() {
           <div className="relative hidden lg:block">
             <div className="absolute inset-0 -translate-x-6 translate-y-6 rounded-[2.5rem] border border-white/5 bg-white/3" />
             <div className="relative aspect-4/5 overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
-              <Image
-                src="/my-photo.jpg"
-                alt="Lead dentist at RadDent Budapest Clinic"
-                fill
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="object-cover"
-                priority
-              />
+              <video
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label={t.home.portraitRole}
+              >
+                <source src="/intro.mp4" type="video/mp4" />
+                {/* Fallback image when video is not supported */}
+                <Image
+                  src="/my-photo.jpg"
+                  alt="Lead dentist at RadDent Budapest Clinic"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
+                />
+              </video>
+
               <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
               <div className="absolute inset-x-8 top-8">
