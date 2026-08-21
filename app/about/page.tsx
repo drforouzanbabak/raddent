@@ -49,7 +49,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="block">
             <div className="space-y-5">
               <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900 shadow-2xl shadow-black/40 aspect-[3/4] lg:aspect-[4/5]">
                 <Image

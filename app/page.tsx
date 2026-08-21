@@ -125,7 +125,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8 lg:py-32">
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center order-2 lg:order-1">
             <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-300">
               <Sparkles className="size-3.5" />
               {t.home.heroEyebrow}
@@ -182,7 +182,7 @@ export default function Home() {
             </dl>
           </div>
 
-          <div className="relative hidden lg:block">
+          <div className="relative block order-1 lg:order-2">
             <div className="absolute inset-0 -translate-x-6 translate-y-6 rounded-[2.5rem] border border-white/5 bg-white/3" />
             <div className="relative aspect-4/5 overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
               <video
