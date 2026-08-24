@@ -73,7 +73,7 @@ type Review = { name: string; text: string };
 const FALLBACK_REVIEWS: Review[] = [
   {
     name: "Eszter K.",
-    text: "I had been putting off a check-up for years. The team at RadDent made me feel completely at ease — and the result looks beautiful.",
+    text: "I had been putting off a check-up for years. The team at RadDent made me feel completely at ease and the result looks beautiful.",
   },
   {
     name: "András P.",
