@@ -1,5 +1,7 @@
 import { normalizeNotificationLang } from "./notification-lang";
 
+const CLINIC_PHONE = "+36 70 746 0776";
+
 const escapeHtml = (value: string) =>
   value
     .replace(/&/g, "&amp;")
@@ -42,7 +44,7 @@ export const doctorApprovalEmail = (
           notes: "Notes",
           suggestSubject: "Revised time slot — RadDent appointment",
           suggestBody: (p: DoctorApprovalEmailParams) =>
-            `Hi ${p.patientName},\n\nUnfortunately, the requested time (${p.date} ${p.startTime}–${p.endTime}) is not available. Instead, I suggest the following time(s):\n\n\nBest regards,\nRadDent`,
+            `Hi ${p.patientName},\n\nUnfortunately, the requested time (${p.date} ${p.startTime}–${p.endTime}) is not available. Instead, I suggest the following time(s):\n\n\nIf one of these times works for you, please book it through our website and we'll confirm it. Otherwise, for any other time, please call us at ${CLINIC_PHONE}.\n\nBest regards,\nRadDent`,
         }
       : l === "fa"
         ? {
@@ -60,7 +62,7 @@ export const doctorApprovalEmail = (
             notes: "یادداشت",
             suggestSubject: "زمان پیشنهادی جدید — وقت رادنت",
             suggestBody: (p: DoctorApprovalEmailParams) =>
-              `${p.patientName} عزیز،\n\nمتأسفانه زمان درخواستی (${p.date} ${p.startTime}–${p.endTime}) در دسترس نیست. به‌جای آن، زمان(های) زیر را پیشنهاد می‌کنم:\n\n\nبا احترام،\nرادنت`,
+              `${p.patientName} عزیز،\n\nمتأسفانه زمان درخواستی (${p.date} ${p.startTime}–${p.endTime}) در دسترس نیست. به‌جای آن، زمان(های) زیر را پیشنهاد می‌کنم:\n\n\nاگر یکی از این زمان‌ها برای شما مناسب است، لطفاً از طریق وب‌سایت رزرو کنید تا آن را تأیید کنیم. در غیر این صورت، برای هر زمان دیگری لطفاً با شماره ${CLINIC_PHONE} تماس بگیرید.\n\nبا احترام،\nرادنت`,
           }
         : {
             subject: `Új időpontkérés — ${params.date} ${params.startTime}`,
@@ -77,7 +79,7 @@ export const doctorApprovalEmail = (
             notes: "Megjegyzés",
             suggestSubject: "Módosított időpont — RadDent",
             suggestBody: (p: DoctorApprovalEmailParams) =>
-              `Kedves ${p.patientName}!\n\nSajnos a kért időpont (${p.date} ${p.startTime}–${p.endTime}) nem elérhető. Helyette az alábbi időponto(ka)t javaslom:\n\n\nÜdvözlettel,\nRadDent`,
+              `Kedves ${p.patientName}!\n\nSajnos a kért időpont (${p.date} ${p.startTime}–${p.endTime}) nem elérhető. Helyette az alábbi időponto(ka)t javaslom:\n\n\nHa valamelyik időpont megfelel Önnek, kérjük, foglalja le weboldalunkon, és visszaigazoljuk. Egyéb időpont esetén kérjük, hívjon minket a ${CLINIC_PHONE} számon.\n\nÜdvözlettel,\nRadDent`,
           };
 
   const row = (label: string, value: string) =>
@@ -114,8 +116,6 @@ export type PatientConfirmationEmailParams = {
   endTime: string;
   location: string;
 };
-
-const CLINIC_PHONE = "+36 70 746 0776";
 
 export const patientConfirmationEmail = (
   lang: string | undefined,
