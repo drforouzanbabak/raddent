@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const TITLE = "Időpontfoglalás";
 const DESCRIPTION =
-  "Foglaljon fogorvosi időpontot a szigetszentmiklósi RadDent rendelőjébe. Válasszon szabad dátumot és órát, adja meg adatait, és azonnali SMS-megerősítést kap.";
+  "Foglaljon fogorvosi időpontot a szigetszentmiklósi RadDent rendelőjébe. Válasszon szabad dátumot és órát, adja meg adatait, és e-mailben kap megerősítést, amint a rendelő jóváhagyta.";
 
 export const metadata: Metadata = {
   title: TITLE,

@@ -251,19 +251,19 @@ export const MESSAGES = {
         },
         {
           heading: "How we use your information",
-          body: "Your details are used to create your appointment in Google Calendar, to keep a patient record in a private Google Sheet so that we remember you on your next visit, to send a confirmation SMS through Infobip immediately after booking, and to send a reminder SMS the day before your appointment.",
+          body: "Your details are used to notify the clinic of your appointment request by email, to create your appointment in Google Calendar once the clinic approves it, to keep a patient record in a private Google Sheet so that we remember you on your next visit, and to send you a confirmation email once your appointment is approved.",
         },
         {
           heading: "Legal basis for processing",
-          body: "We process your personal data on the following legal bases under GDPR: (a) performance of a contract and pre-contractual steps at your request — Article 6(1)(b) — to schedule and provide the appointment you have asked for; (b) provision of healthcare — Article 9(2)(h) — for special-category health data such as your date of birth and any clinical information in the notes field; (c) legitimate interests — Article 6(1)(f) — to send you an appointment reminder SMS the day before your visit, so you don't miss your slot; (d) legal obligation — Article 6(1)(c) — to retain medical records for the period required by Hungarian healthcare law.",
+          body: "We process your personal data on the following legal bases under GDPR: (a) performance of a contract and pre-contractual steps at your request — Article 6(1)(b) — to schedule and provide the appointment you have asked for; (b) provision of healthcare — Article 9(2)(h) — for special-category health data such as your date of birth and any clinical information in the notes field; (c) legitimate interests — Article 6(1)(f) — to notify the clinic of your appointment request and to email you once it is approved; (d) legal obligation — Article 6(1)(c) — to retain medical records for the period required by Hungarian healthcare law.",
         },
         {
           heading: "Who has access",
-          body: "Only Dr Forouzan has access to your patient record. The only third parties involved are Google (Sheets and Calendar) and Infobip (SMS delivery). These providers act as data processors on our behalf under written data processing agreements and are subject to their own privacy policies.",
+          body: "Only Dr Forouzan has access to your patient record. The only third party involved is Google (Sheets, Calendar, and Gmail for sending confirmation emails). This provider acts as a data processor on our behalf under a written data processing agreement and is subject to its own privacy policy.",
         },
         {
           heading: "International transfers",
-          body: "Google may process some of your data on servers located outside the European Economic Area. Where this happens, Google relies on the EU-US Data Privacy Framework and the European Commission's Standard Contractual Clauses to provide a level of protection equivalent to that required by GDPR. Infobip processes data within the EEA.",
+          body: "Google may process some of your data on servers located outside the European Economic Area. Where this happens, Google relies on the EU-US Data Privacy Framework and the European Commission's Standard Contractual Clauses to provide a level of protection equivalent to that required by GDPR.",
         },
         {
           heading: "How long we keep your data",
@@ -271,7 +271,7 @@ export const MESSAGES = {
         },
         {
           heading: "Your rights",
-          body: "Under GDPR you have the right to request access to your personal data, to ask for it to be corrected, and — subject to the statutory retention period for medical records — to ask for it to be deleted or for processing to be restricted. You may also object to processing based on legitimate interests (for example, our appointment reminders). To exercise any of these rights, email us — see Contact below.",
+          body: "Under GDPR you have the right to request access to your personal data, to ask for it to be corrected, and — subject to the statutory retention period for medical records — to ask for it to be deleted or for processing to be restricted. You may also object to processing based on legitimate interests (for example, our appointment request emails). To exercise any of these rights, email us — see Contact below.",
         },
         {
           heading: "Right to lodge a complaint",
@@ -296,7 +296,7 @@ export const MESSAGES = {
         },
         {
           heading: "Booking an appointment",
-          body: "When you submit the booking form you are requesting an appointment at the selected date and time. The appointment is confirmed once we receive the request, add it to the calendar, and send you a confirmation SMS. If you do not receive a confirmation, please get in touch.",
+          body: "When you submit the booking form you are requesting an appointment at the selected date and time. The appointment is only confirmed once the clinic reviews and approves your request and you receive a confirmation email. If you do not receive a confirmation, please get in touch.",
         },
         {
           heading: "Cancelling or rescheduling",
@@ -357,8 +357,8 @@ export const MESSAGES = {
       selectDate: "Select date",
       summaryDate: "Date",
       summaryTime: "Time",
-      confirmBooking: "Confirm Booking",
-      submitting: "Booking…",
+      confirmBooking: "Reserve",
+      submitting: "Sending request…",
       consentBefore: "I have read and accept the ",
       consentLink: "Privacy Policy",
       consentAfter:
@@ -371,7 +371,6 @@ export const MESSAGES = {
         phone: "Phone number is required.",
         phoneCountry: "Phone number must include a country code.",
         phoneInvalid: "Enter a valid phone number.",
-        phoneMobile: "Enter a mobile number — we'll send SMS confirmations.",
         dob: "Date of birth is required.",
         address: "Address is required.",
         consent: "You must accept the Privacy Policy to book an appointment.",
@@ -380,9 +379,9 @@ export const MESSAGES = {
       toastErrorsSingular: "1 field needs your attention.",
       toastErrorsPlural: "{n} fields need your attention.",
       toastBookingFailed: "Booking failed.",
-      toastBookingSuccess: "Appointment booked!",
-      toastSmsSent: "We've sent you a confirmation SMS.",
-      toastSmsFailed: "Booking confirmed (SMS could not be sent).",
+      toastBookingSuccess: "Request received!",
+      toastBookingPending:
+        "We received your request. If the doctor is available, you'll get a confirmation email as soon as it's approved by the clinic.",
     },
   },
   hu: {
@@ -451,7 +450,7 @@ export const MESSAGES = {
       heroEyebrow: "Butik fogászati ellátás",
       heroTitle: "Fogászat, ami visszaadja a mosolyát.",
       heroSubtitle:
-        "Dr. Forouzan Babak vagyok — és a RadDent-ben hisszük, hogy minden mosoly értékes. Modern eljárások, prémium anyagok és az a fajta törődés, ami visszaadja az önbizalmát.",
+        "Dr. Forouzan Babak vagyok és a RadDent-ben hisszük, hogy minden mosoly értékes. Modern eljárások, prémium anyagok és az a fajta törődés, ami visszaadja az önbizalmát.",
       bookAppointment: "Időpontfoglalás",
       messageUs: "Üzenjen nekünk",
       exploreTreatments: "Kezeléseink",
@@ -628,19 +627,19 @@ export const MESSAGES = {
         },
         {
           heading: "Hogyan használjuk az adatait",
-          body: "Az adatait az időpont létrehozására használjuk a Google Naptárban, egy privát Google Sheet páciensnyilvántartás vezetésére, hogy a következő látogatáskor is emlékezzünk Önre, megerősítő SMS küldésére az Infobip szolgáltatáson keresztül közvetlenül a foglalás után, valamint emlékeztető SMS küldésére az időpontot megelőző napon.",
+          body: "Az adatait a rendelő e-mailben történő értesítésére használjuk az időpontkérésről, az időpont Google Naptárban történő létrehozására a rendelő jóváhagyása után, egy privát Google Sheet páciensnyilvántartás vezetésére, hogy a következő látogatáskor is emlékezzünk Önre, valamint megerősítő e-mail küldésére, amint az időpontot jóváhagyták.",
         },
         {
           heading: "Az adatkezelés jogalapja",
-          body: "Személyes adatait a GDPR alábbi jogalapjai alapján kezeljük: (a) szerződés teljesítése és a szerződéskötést megelőző lépések megtétele az Ön kérésére — 6. cikk (1) bekezdés b) pont — az Ön által kért időpont biztosításához; (b) egészségügyi ellátás nyújtása — 9. cikk (2) bekezdés h) pont — a különleges kategóriájú egészségügyi adatok kezeléséhez (születési dátum, a megjegyzésekben szereplő klinikai információk); (c) jogos érdek — 6. cikk (1) bekezdés f) pont — az időpontot megelőző napon küldött emlékeztető SMS célja, hogy ne maradjon le a foglalt időpontról; (d) jogi kötelezettség teljesítése — 6. cikk (1) bekezdés c) pont — az egészségügyi dokumentáció magyar jogszabályok által előírt megőrzése.",
+          body: "Személyes adatait a GDPR alábbi jogalapjai alapján kezeljük: (a) szerződés teljesítése és a szerződéskötést megelőző lépések megtétele az Ön kérésére — 6. cikk (1) bekezdés b) pont — az Ön által kért időpont biztosításához; (b) egészségügyi ellátás nyújtása — 9. cikk (2) bekezdés h) pont — a különleges kategóriájú egészségügyi adatok kezeléséhez (születési dátum, a megjegyzésekben szereplő klinikai információk); (c) jogos érdek — 6. cikk (1) bekezdés f) pont — a rendelő értesítése az időpontkérésről, és e-mail küldése Önnek a jóváhagyást követően; (d) jogi kötelezettség teljesítése — 6. cikk (1) bekezdés c) pont — az egészségügyi dokumentáció magyar jogszabályok által előírt megőrzése.",
         },
         {
           heading: "Ki fér hozzá",
-          body: "A páciensnyilvántartásához kizárólag Dr. Forouzan fér hozzá. A folyamatban érintett harmadik felek a Google (Sheets és Calendar) és az Infobip (SMS-küldés). Ezek a szolgáltatók írásos adatfeldolgozási szerződés alapján, adatfeldolgozóként nevünkben kezelik az adatokat, és saját adatvédelmi szabályzatuk vonatkozik rájuk.",
+          body: "A páciensnyilvántartásához kizárólag Dr. Forouzan fér hozzá. A folyamatban egyetlen harmadik fél vesz részt: a Google (Sheets, Calendar, valamint a Gmail a megerősítő e-mailek küldéséhez). Ez a szolgáltató írásos adatfeldolgozási szerződés alapján, adatfeldolgozóként kezeli az adatokat nevünkben, és saját adatvédelmi szabályzata vonatkozik rá.",
         },
         {
           heading: "Adattovábbítás harmadik országba",
-          body: "A Google bizonyos esetekben az Európai Gazdasági Térségen (EGT) kívüli szervereken is kezelheti az adatait. Ilyen esetben a Google az EU–USA Adatvédelmi Keretrendszerre (EU-US Data Privacy Framework) és az Európai Bizottság által elfogadott Általános Szerződési Feltételekre (SCC) támaszkodik, amelyek a GDPR-ral egyenértékű védelmi szintet biztosítanak. Az Infobip az EGT-n belül kezeli az adatokat.",
+          body: "A Google bizonyos esetekben az Európai Gazdasági Térségen (EGT) kívüli szervereken is kezelheti az adatait. Ilyen esetben a Google az EU–USA Adatvédelmi Keretrendszerre (EU-US Data Privacy Framework) és az Európai Bizottság által elfogadott Általános Szerződési Feltételekre (SCC) támaszkodik, amelyek a GDPR-ral egyenértékű védelmi szintet biztosítanak.",
         },
         {
           heading: "Meddig őrizzük az adatait",
@@ -648,7 +647,7 @@ export const MESSAGES = {
         },
         {
           heading: "Az Ön jogai",
-          body: "A GDPR alapján jogosult személyes adataihoz való hozzáférést kérni, javításukat kezdeményezni, valamint — az egészségügyi dokumentációra vonatkozó kötelező megőrzési időre figyelemmel — kérni a törlésüket vagy az adatkezelés korlátozását. A jogos érdeken alapuló adatkezelés (például az emlékeztető SMS) ellen tiltakozhat. Jogainak gyakorlásához írjon nekünk a lenti Kapcsolat részben megadott elérhetőségre.",
+          body: "A GDPR alapján jogosult személyes adataihoz való hozzáférést kérni, javításukat kezdeményezni, valamint — az egészségügyi dokumentációra vonatkozó kötelező megőrzési időre figyelemmel — kérni a törlésüket vagy az adatkezelés korlátozását. A jogos érdeken alapuló adatkezelés (például az időpontkéréssel kapcsolatos e-mailek) ellen tiltakozhat. Jogainak gyakorlásához írjon nekünk a lenti Kapcsolat részben megadott elérhetőségre.",
         },
         {
           heading: "Panasztételi jog",
@@ -673,7 +672,7 @@ export const MESSAGES = {
         },
         {
           heading: "Időpontfoglalás",
-          body: "Amikor elküldi az időpontfoglaló űrlapot, kérelmet nyújt be a kiválasztott dátumra és időpontra. Az időpont akkor minősül megerősítettnek, amikor megkapjuk a kérelmet, bekerül a naptárba, és Ön megerősítő SMS-t kap. Ha nem érkezik megerősítés, kérjük, vegye fel velünk a kapcsolatot.",
+          body: "Amikor elküldi az időpontfoglaló űrlapot, kérelmet nyújt be a kiválasztott dátumra és időpontra. Az időpont csak akkor minősül megerősítettnek, amikor a rendelő elbírálja és jóváhagyja a kérelmét, és Ön megerősítő e-mailt kap. Ha nem érkezik megerősítés, kérjük, vegye fel velünk a kapcsolatot.",
         },
         {
           heading: "Lemondás és módosítás",
@@ -736,8 +735,8 @@ export const MESSAGES = {
       selectDate: "Válasszon dátumot",
       summaryDate: "Dátum",
       summaryTime: "Idő",
-      confirmBooking: "Foglalás megerősítése",
-      submitting: "Foglalás folyamatban…",
+      confirmBooking: "Foglalás",
+      submitting: "Kérés küldése…",
       consentBefore: "Elolvastam és elfogadom az ",
       consentLink: "adatvédelmi tájékoztatót",
       consentAfter:
@@ -750,7 +749,6 @@ export const MESSAGES = {
         phone: "A telefonszám megadása kötelező.",
         phoneCountry: "A telefonszámnak tartalmaznia kell az országhívót.",
         phoneInvalid: "Adjon meg egy érvényes telefonszámot.",
-        phoneMobile: "Adjon meg egy mobilszámot — SMS megerősítést küldünk.",
         dob: "A születési dátum megadása kötelező.",
         address: "A cím megadása kötelező.",
         consent:
@@ -760,9 +758,9 @@ export const MESSAGES = {
       toastErrorsSingular: "1 mezőre figyelmet kell fordítania.",
       toastErrorsPlural: "{n} mezőre figyelmet kell fordítania.",
       toastBookingFailed: "A foglalás sikertelen.",
-      toastBookingSuccess: "Időpont lefoglalva!",
-      toastSmsSent: "Megerősítő SMS-t küldtünk.",
-      toastSmsFailed: "Foglalás megerősítve (az SMS nem volt elküldhető).",
+      toastBookingSuccess: "Kérés megérkezett!",
+      toastBookingPending:
+        "Megkaptuk kérését. Ha az orvos ráér, jóváhagyás után e-mailben kap megerősítést a rendelőtől.",
     },
   },
 } as const;

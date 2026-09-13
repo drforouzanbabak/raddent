@@ -1,28 +1,43 @@
 import { google } from "googleapis";
-import type { Patient } from "./google_sheet";
-import { normalizeSmsLang, type SmsLang } from "@/lib/sms-templates";
+import { getWeeklySchedule, type Patient } from "./google_sheet";
+import {
+  normalizeNotificationLang,
+  type NotificationLang,
+} from "@/lib/notification-lang";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
 const CLINIC_PHONE = "+36 70 746 0776";
 
 const DESCRIPTION_STRINGS: Record<
-  SmsLang,
-  { name: string; notes: string; contact: (phone: string) => string }
+  NotificationLang,
+  {
+    name: string;
+    email: string;
+    phone: string;
+    notes: string;
+    contact: (phone: string) => string;
+  }
 > = {
   en: {
     name: "Name",
+    email: "Email",
+    phone: "Phone",
     notes: "Notes",
     contact: (phone) => `To reschedule or cancel, call the clinic: ${phone}`,
   },
   hu: {
     name: "Név",
+    email: "E-mail",
+    phone: "Telefon",
     notes: "Megjegyzések",
     contact: (phone) =>
       `Időpont módosításához vagy lemondásához hívja a rendelőt: ${phone}`,
   },
   fa: {
     name: "نام",
+    email: "ایمیل",
+    phone: "تلفن",
     notes: "یادداشت‌ها",
     contact: (phone) =>
       `برای تغییر یا لغو وقت، با کلینیک تماس بگیرید: ${phone}`,
@@ -61,13 +76,15 @@ const buildPatientDescription = (
   patient: Patient,
   language?: string,
 ): string => {
-  const strings = DESCRIPTION_STRINGS[normalizeSmsLang(language)];
+  const strings = DESCRIPTION_STRINGS[normalizeNotificationLang(language)];
   const lines: string[] = [];
 
   const fullName = [patient.firstName, patient.lastName]
     .filter(Boolean)
     .join(" ");
   if (fullName) lines.push(`${strings.name}: ${fullName}`);
+  if (patient.email) lines.push(`${strings.email}: ${patient.email}`);
+  if (patient.phone) lines.push(`${strings.phone}: ${patient.phone}`);
   if (patient.notes) lines.push(`${strings.notes}: ${patient.notes}`);
   lines.push("");
   lines.push(strings.contact(CLINIC_PHONE));
@@ -193,29 +210,6 @@ export const createCalendarEvent = async (event: CalendarEventInput) => {
   return response.data;
 };
 
-const WEEK_HOUR_SLOTS = [
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "12:00",
-  "12:30",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:00",
-  "17:30",
-  "18:00",
-  "18:30",
-];
-
 const SLOT_DURATION_MINUTES = 30;
 
 const addSlotDuration = (time: string) => {
@@ -226,10 +220,30 @@ const addSlotDuration = (time: string) => {
   return `${String(nextHour).padStart(2, "0")}:${String(nextMinute).padStart(2, "0")}`;
 };
 
-const isWeekendIso = (iso: string) => {
+const weekdayFromIso = (iso: string) => {
   const [y, m, d] = iso.split("-").map(Number);
-  const day = new Date(y, m - 1, d).getDay();
-  return day === 0 || day === 6;
+  return new Date(y, m - 1, d).getDay();
+};
+
+const minutesToTime = (totalMinutes: number) => {
+  const hours = Math.floor(totalMinutes / 60) % 24;
+  const minutes = totalMinutes % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
+const buildDaySlots = (daySchedule: {
+  startMinutes: number;
+  endMinutes: number;
+}) => {
+  const slots: string[] = [];
+  for (
+    let minutes = daySchedule.startMinutes;
+    minutes + SLOT_DURATION_MINUTES <= daySchedule.endMinutes;
+    minutes += SLOT_DURATION_MINUTES
+  ) {
+    slots.push(minutesToTime(minutes));
+  }
+  return slots;
 };
 
 const buildBudapestDateTime = (date: string, time: string) =>
@@ -303,13 +317,17 @@ export const getCalendarEventsForDate = async (date: string) => {
 };
 
 export const getAvailableCalendarTimes = async (date: string) => {
-  if (isWeekendIso(date)) {
+  const schedule = await getWeeklySchedule();
+  const daySchedule = schedule[weekdayFromIso(date)];
+
+  if (!daySchedule) {
     return [];
   }
 
+  const slots = buildDaySlots(daySchedule);
   const busyTimes = await getCalendarBusyTimes(date);
 
-  return WEEK_HOUR_SLOTS.filter((slot) => {
+  return slots.filter((slot) => {
     const slotStart = buildBudapestDateTime(date, slot);
     const slotEnd = buildBudapestDateTime(date, addSlotDuration(slot));
 

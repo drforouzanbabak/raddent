@@ -85,7 +85,7 @@ const FALLBACK_REVIEWS: Review[] = [
   },
   {
     name: "Dávid M.",
-    text: "Booked online, reminder by SMS, and the whitening result was even better than I expected. Highly recommend.",
+    text: "Booked online, confirmed by email, and the whitening result was even better than I expected. Highly recommend.",
   },
 ];
 

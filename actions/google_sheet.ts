@@ -4,7 +4,7 @@ import { randomUUID } from "crypto";
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const PATIENT_SHEET_NAME = "Sheet1";
 const PRICES_SHEET_NAME = "Sheet2";
-const BLOCKED_DATES_SHEET_NAME = "Sheet3";
+const WEEKLY_SCHEDULE_SHEET_NAME = "Sheet3";
 
 export type ServicePrice = {
   name: string;
@@ -165,88 +165,96 @@ export const getPatientById = async (id: string): Promise<Patient | null> => {
   return null;
 };
 
-const normalizeBlockedIso = (raw: string): string | null => {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-  const match = trimmed.match(/^(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})$/);
-  if (!match) return null;
-  const [, year, month, day] = match;
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+const WEEKDAY_NAMES: Record<string, number> = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6,
 };
 
-const parseHourMinute = (raw: string): number | null => {
-  const match = raw.trim().match(/^(\d{1,2})(?::(\d{2}))?$/);
+const parseHourMinute12 = (raw: string): number | null => {
+  const match = raw.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)$/i);
   if (!match) return null;
-  const hours = Number(match[1]);
+  const rawHours = Number(match[1]);
   const minutes = match[2] ? Number(match[2]) : 0;
-  if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59) return null;
+  if (rawHours < 1 || rawHours > 12 || minutes < 0 || minutes > 59) {
+    return null;
+  }
+
+  const meridiem = match[3].toUpperCase();
+  const hours =
+    meridiem === "AM"
+      ? rawHours % 12
+      : (rawHours % 12) + 12;
+
   return hours * 60 + minutes;
 };
 
-const parseBlockedTimeRange = (
+const parseScheduleTimeRange = (
   raw: string,
 ): { startMinutes: number; endMinutes: number } | null => {
   const trimmed = raw.trim();
   if (!trimmed) return null;
   const parts = trimmed.split(/\s*-\s*/);
   if (parts.length !== 2) return null;
-  const startMinutes = parseHourMinute(parts[0]);
-  const endMinutes = parseHourMinute(parts[1]);
+  const startMinutes = parseHourMinute12(parts[0]);
+  const endMinutes = parseHourMinute12(parts[1]);
   if (startMinutes === null || endMinutes === null) return null;
   if (endMinutes <= startMinutes) return null;
   return { startMinutes, endMinutes };
 };
 
-export type BlockedSlot = {
-  date: string;
-  startMinutes?: number;
-  endMinutes?: number;
-};
+export type DaySchedule = { startMinutes: number; endMinutes: number } | null;
 
-export const getBlockedSlots = async (): Promise<BlockedSlot[]> => {
+// Keyed by JS Date#getDay() (0 = Sunday ... 6 = Saturday).
+export type WeeklySchedule = Record<number, DaySchedule>;
+
+const emptyWeeklySchedule = (): WeeklySchedule => ({
+  0: null,
+  1: null,
+  2: null,
+  3: null,
+  4: null,
+  5: null,
+  6: null,
+});
+
+// Reads the recurring weekly hours from Sheet3 (WeekDay | Time). A blank
+// Time cell means the doctor does not take bookings that weekday.
+export const getWeeklySchedule = async (): Promise<WeeklySchedule> => {
   const sheetId = process.env.GOOGLE_SHEET_ID;
   if (!sheetId) {
     throw new Error("GOOGLE_SHEET_ID is not set");
   }
 
+  const schedule = emptyWeeklySchedule();
+
   try {
     const sheets = await getSheetsClient();
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
-      range: `${BLOCKED_DATES_SHEET_NAME}!A:B`,
+      range: `${WEEKLY_SCHEDULE_SHEET_NAME}!A:B`,
     });
 
     const rows = response.data.values ?? [];
-    const slots: BlockedSlot[] = [];
 
     for (const row of rows) {
-      const date = normalizeBlockedIso(String(row[0] ?? ""));
-      if (!date) continue;
+      const weekday = WEEKDAY_NAMES[String(row[0] ?? "").trim().toLowerCase()];
+      if (weekday === undefined) continue;
 
-      const range = parseBlockedTimeRange(String(row[1] ?? ""));
-      if (range) {
-        slots.push({ date, ...range });
-      } else {
-        slots.push({ date });
-      }
+      schedule[weekday] = parseScheduleTimeRange(String(row[1] ?? ""));
     }
-
-    return slots;
   } catch (error: unknown) {
     console.error(
-      "[blocked-dates] failed to load Sheet3:",
+      "[weekly-schedule] failed to load Sheet3:",
       (error as Error).message,
     );
-    return [];
   }
-};
 
-export const getBlockedDates = async (): Promise<string[]> => {
-  const slots = await getBlockedSlots();
-  const fullDay = slots
-    .filter((slot) => slot.startMinutes === undefined)
-    .map((slot) => slot.date);
-  return Array.from(new Set(fullDay));
+  return schedule;
 };
 
 export const getServicePrices = async (): Promise<ServicePrice[]> => {

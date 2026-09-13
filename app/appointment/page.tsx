@@ -3,7 +3,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
+import { isValidPhoneNumber } from "react-phone-number-input";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -88,23 +88,24 @@ export default function AppointmentPage() {
     null,
   );
   const [dobOpen, setDobOpen] = useState(false);
-  const [blockedDates, setBlockedDates] = useState<string[]>([]);
+  // Fallback while the sheet-driven schedule loads: assume Mon-Fri are open.
+  const [openWeekdays, setOpenWeekdays] = useState<number[]>([1, 2, 3, 4, 5]);
 
   useEffect(() => {
     let ignore = false;
     (async () => {
       try {
-        const response = await fetch("/api/blocked-dates", {
+        const response = await fetch("/api/schedule", {
           cache: "no-store",
         });
         if (!response.ok) return;
         const data = await response.json();
         if (ignore) return;
-        if (Array.isArray(data.blockedDates)) {
-          setBlockedDates(data.blockedDates as string[]);
+        if (Array.isArray(data.openWeekdays)) {
+          setOpenWeekdays(data.openWeekdays as number[]);
         }
       } catch {
-        // non-fatal — server still enforces blocked dates
+        // non-fatal — server still enforces the schedule via /api/availability
       }
     })();
     return () => {
@@ -113,7 +114,7 @@ export default function AppointmentPage() {
   }, []);
 
   const getWeekDays = (weekStartDate: Date) => {
-    return Array.from({ length: 5 }, (_, index) => {
+    return Array.from({ length: 7 }, (_, index) => {
       const date = new Date(weekStartDate);
       date.setDate(date.getDate() + index);
       return date;
@@ -165,10 +166,7 @@ export default function AppointmentPage() {
     return `${String(nextHour).padStart(2, "0")}:${String(nextMinute).padStart(2, "0")}`;
   };
 
-  const isWeekend = (day: Date) => {
-    const d = day.getDay();
-    return d === 0 || d === 6;
-  };
+  const isClosedDay = (day: Date) => !openWeekdays.includes(day.getDay());
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -290,13 +288,6 @@ export default function AppointmentPage() {
       next.phone = e.phoneCountry;
     } else if (!isValidPhoneNumber(state.phone)) {
       next.phone = e.phoneInvalid;
-    } else {
-      const parsed = parsePhoneNumber(state.phone);
-      if (!parsed || !parsed.country) {
-        next.phone = e.phoneInvalid;
-      } else if (parsed.getType() === "FIXED_LINE") {
-        next.phone = e.phoneMobile;
-      }
     }
 
     if (!state.dob.trim()) next.dob = e.dob;
@@ -345,12 +336,8 @@ export default function AppointmentPage() {
         throw new Error(result?.message ?? t.appointment.toastBookingFailed);
       }
 
-      const smsNote = result?.sms?.sent
-        ? t.appointment.toastSmsSent
-        : t.appointment.toastSmsFailed;
-
       toast.success(t.appointment.toastBookingSuccess, {
-        description: `${form.date} at ${form.startTime}. ${smsNote}`,
+        description: t.appointment.toastBookingPending,
       });
 
       setForm(initialFormState);
@@ -432,9 +419,10 @@ export default function AppointmentPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                  <div className="grid grid-cols-3 gap-3 sm:grid-cols-7">
                     {getWeekDays(weekStart).map((day) => {
                       const iso = formatDateIso(day);
+                      const disabled = isPastDay(day) || isClosedDay(day);
                       return (
                         <button
                           key={iso}
@@ -447,15 +435,9 @@ export default function AppointmentPage() {
                               endTime: "",
                             }))
                           }
-                          disabled={
-                            isPastDay(day) ||
-                            isWeekend(day) ||
-                            blockedDates.includes(iso)
-                          }
+                          disabled={disabled}
                           className={`rounded-[1.75rem] border px-3 py-4 text-left text-sm transition ${
-                            isPastDay(day) ||
-                            isWeekend(day) ||
-                            blockedDates.includes(iso)
+                            disabled
                               ? "cursor-not-allowed border-white/10 bg-slate-900/60 text-slate-500"
                               : form.date === iso
                                 ? "cursor-pointer border-white bg-white/10 text-white"
