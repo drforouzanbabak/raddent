@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAvailableCalendarTimes } from "@/actions/google_calendar";
+import { getDaySlots } from "@/actions/google_calendar";
 
 export const dynamic = "force-dynamic";
 
@@ -15,8 +15,8 @@ export async function GET(request: Request) {
   }
 
   try {
-    const availableTimes = await getAvailableCalendarTimes(date);
-    return NextResponse.json({ availableTimes });
+    const slots = await getDaySlots(date);
+    return NextResponse.json({ slots });
   } catch (error: unknown) {
     console.error("Availability lookup failed:", (error as Error).message);
     return NextResponse.json(

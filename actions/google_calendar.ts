@@ -316,7 +316,9 @@ export const getCalendarEventsForDate = async (date: string) => {
   return response.data.items ?? [];
 };
 
-export const getAvailableCalendarTimes = async (date: string) => {
+export type DaySlot = { time: string; available: boolean };
+
+export const getDaySlots = async (date: string): Promise<DaySlot[]> => {
   const schedule = await getWeeklySchedule();
   const daySchedule = schedule[weekdayFromIso(date)];
 
@@ -327,16 +329,18 @@ export const getAvailableCalendarTimes = async (date: string) => {
   const slots = buildDaySlots(daySchedule);
   const busyTimes = await getCalendarBusyTimes(date);
 
-  return slots.filter((slot) => {
+  return slots.map((slot) => {
     const slotStart = buildBudapestDateTime(date, slot);
     const slotEnd = buildBudapestDateTime(date, addSlotDuration(slot));
 
-    return !busyTimes.some((interval) => {
+    const available = !busyTimes.some((interval) => {
       if (!interval.start || !interval.end) {
         return false;
       }
       return rangesOverlap(slotStart, slotEnd, interval.start, interval.end);
     });
+
+    return { time: slot, available };
   });
 };
 

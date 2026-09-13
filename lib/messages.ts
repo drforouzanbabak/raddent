@@ -447,7 +447,7 @@ export const MESSAGES = {
       viewPriceList: "Árlista megtekintése →",
     },
     home: {
-      heroEyebrow: "Butik fogászati ellátás",
+      heroEyebrow: "Személyre szabott fogászati ellátás",
       heroTitle: "Fogászat, ami visszaadja a mosolyát.",
       heroSubtitle:
         "Dr. Forouzan Babak vagyok és a RadDent-ben hisszük, hogy minden mosoly értékes. Modern eljárások, prémium anyagok és az a fajta törődés, ami visszaadja az önbizalmát.",
@@ -506,7 +506,7 @@ export const MESSAGES = {
         "A legtöbb rendelő rohan. Mi nem. Hosszabb időpontok, kevesebb páciens naponta, és egyetlen kapcsolattartó a kezelés minden szakaszában.",
       reasons: [
         {
-          title: "Butik élmény",
+          title: "Személyre szabott fogászati ellátás",
           description:
             "Privát kezelőhelyiségek, nyugodt megvilágítás, súlyozott takarók — a legszorongóbb páciensek megnyugtatására tervezve.",
         },

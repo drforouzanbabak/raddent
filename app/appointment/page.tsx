@@ -82,7 +82,9 @@ export default function AppointmentPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
-  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [daySlots, setDaySlots] = useState<
+    { time: string; available: boolean }[]
+  >([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [availabilityError, setAvailabilityError] = useState<string | null>(
     null,
@@ -182,7 +184,8 @@ export default function AppointmentPage() {
     });
   };
 
-  const selectTime = (time: string) => {
+  const selectTime = (time: string, available: boolean) => {
+    if (!available) return;
     setForm((prev) => ({
       ...prev,
       startTime: time,
@@ -214,18 +217,18 @@ export default function AppointmentPage() {
         }
 
         const data = await response.json();
-        const times = Array.isArray(data.availableTimes)
-          ? (data.availableTimes as string[])
+        const slots = Array.isArray(data.slots)
+          ? (data.slots as { time: string; available: boolean }[])
           : [];
 
         const now = new Date();
         const todayIso = formatDateIso(now);
-        const filteredTimes = times.filter((slot: string) => {
+        const filteredSlots = slots.filter((slot) => {
           if (form.date !== todayIso) {
             return true;
           }
 
-          const [slotHour, slotMinute] = slot.split(":").map(Number);
+          const [slotHour, slotMinute] = slot.time.split(":").map(Number);
           const slotMinutes = slotHour * 60 + slotMinute;
           const nowMinutes = now.getHours() * 60 + now.getMinutes();
           return slotMinutes > nowMinutes;
@@ -233,9 +236,12 @@ export default function AppointmentPage() {
 
         if (ignore) return;
 
-        setAvailableTimes(filteredTimes);
+        setDaySlots(filteredSlots);
         setForm((prev) => {
-          if (prev.startTime && filteredTimes.includes(prev.startTime)) {
+          const stillAvailable = filteredSlots.some(
+            (slot) => slot.time === prev.startTime && slot.available,
+          );
+          if (prev.startTime && stillAvailable) {
             return prev;
           }
 
@@ -248,7 +254,7 @@ export default function AppointmentPage() {
       } catch (error: unknown) {
         if (!ignore) {
           setAvailabilityError((error as Error).message);
-          setAvailableTimes([]);
+          setDaySlots([]);
         }
       } finally {
         if (!ignore) {
@@ -481,20 +487,24 @@ export default function AppointmentPage() {
                       <div className="rounded-3xl border border-red-500/20 bg-red-500/10 p-6 text-sm text-rose-100">
                         {availabilityError}
                       </div>
-                    ) : availableTimes.length > 0 ? (
+                    ) : daySlots.length > 0 ? (
                       <div className="grid max-h-80 grid-cols-2 gap-3 overflow-y-auto pr-1 sm:max-h-none sm:grid-cols-3 sm:overflow-visible sm:pr-0">
-                        {availableTimes.map((slot) => (
+                        {daySlots.map((slot) => (
                           <button
-                            key={slot}
+                            key={slot.time}
                             type="button"
-                            onClick={() => selectTime(slot)}
+                            onClick={() => selectTime(slot.time, slot.available)}
+                            disabled={!slot.available}
+                            aria-disabled={!slot.available}
                             className={`rounded-3xl border px-4 py-4 text-sm font-semibold transition ${
-                              form.startTime === slot
-                                ? "cursor-pointer border-white bg-white/10 text-white"
-                                : "cursor-pointer border-white/10 bg-white/3 text-slate-200 hover:border-white/20"
+                              !slot.available
+                                ? "cursor-not-allowed border-red-500/20 bg-red-500/10 text-red-300/70 line-through"
+                                : form.startTime === slot.time
+                                  ? "cursor-pointer border-white bg-white/10 text-white"
+                                  : "cursor-pointer border-white/10 bg-white/3 text-slate-200 hover:border-white/20"
                             }`}
                           >
-                            {slot} – {addSlotDuration(slot)}
+                            {slot.time} – {addSlotDuration(slot.time)}
                           </button>
                         ))}
                       </div>

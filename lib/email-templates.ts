@@ -44,7 +44,7 @@ export const doctorApprovalEmail = (
           notes: "Notes",
           suggestSubject: "Revised time slot — RadDent appointment",
           suggestBody: (p: DoctorApprovalEmailParams) =>
-            `Hi ${p.patientName},\n\nUnfortunately, the requested time (${p.date} ${p.startTime}–${p.endTime}) is not available. Instead, I suggest the following time(s):\n\n\nIf one of these times works for you, please book it through our website and we'll confirm it. Otherwise, for any other time, please call us at ${CLINIC_PHONE}.\n\nBest regards,\nRadDent`,
+            `Hi ${p.patientName},\n\nUnfortunately, the requested time (${p.date} ${p.startTime}–${p.endTime}) is not available.\n\nInstead, I suggest the following time(s):\n\n[ WRITE THE SUGGESTED TIME(S) HERE ]\n\n\nIf one of these times works for you, please book it through our website and we'll confirm it. Otherwise, for any other time, please call us at ${CLINIC_PHONE}.\n\nBest regards,\nRadDent`,
         }
       : l === "fa"
         ? {
@@ -62,7 +62,7 @@ export const doctorApprovalEmail = (
             notes: "یادداشت",
             suggestSubject: "زمان پیشنهادی جدید — وقت رادنت",
             suggestBody: (p: DoctorApprovalEmailParams) =>
-              `${p.patientName} عزیز،\n\nمتأسفانه زمان درخواستی (${p.date} ${p.startTime}–${p.endTime}) در دسترس نیست. به‌جای آن، زمان(های) زیر را پیشنهاد می‌کنم:\n\n\nاگر یکی از این زمان‌ها برای شما مناسب است، لطفاً از طریق وب‌سایت رزرو کنید تا آن را تأیید کنیم. در غیر این صورت، برای هر زمان دیگری لطفاً با شماره ${CLINIC_PHONE} تماس بگیرید.\n\nبا احترام،\nرادنت`,
+              `${p.patientName} عزیز،\n\nمتأسفانه زمان درخواستی (${p.date} ${p.startTime}–${p.endTime}) در دسترس نیست.\n\nبه‌جای آن، زمان(های) زیر را پیشنهاد می‌کنم:\n\n[ زمان(های) پیشنهادی را اینجا بنویسید ]\n\n\nاگر یکی از این زمان‌ها برای شما مناسب است، لطفاً از طریق وب‌سایت رزرو کنید تا آن را تأیید کنیم. در غیر این صورت، برای هر زمان دیگری لطفاً با شماره ${CLINIC_PHONE} تماس بگیرید.\n\nبا احترام،\nرادنت`,
           }
         : {
             subject: `Új időpontkérés — ${params.date} ${params.startTime}`,
@@ -79,7 +79,7 @@ export const doctorApprovalEmail = (
             notes: "Megjegyzés",
             suggestSubject: "Módosított időpont — RadDent",
             suggestBody: (p: DoctorApprovalEmailParams) =>
-              `Kedves ${p.patientName}!\n\nSajnos a kért időpont (${p.date} ${p.startTime}–${p.endTime}) nem elérhető. Helyette az alábbi időponto(ka)t javaslom:\n\n\nHa valamelyik időpont megfelel Önnek, kérjük, foglalja le weboldalunkon, és visszaigazoljuk. Egyéb időpont esetén kérjük, hívjon minket a ${CLINIC_PHONE} számon.\n\nÜdvözlettel,\nRadDent`,
+              `Kedves ${p.patientName}!\n\nSajnos a kért időpont (${p.date} ${p.startTime}–${p.endTime}) nem elérhető.\n\nHelyette az alábbi időponto(ka)t javaslom:\n\n[ ÍRJA IDE A JAVASOLT IDŐPONTO(KA)T ]\n\n\nHa valamelyik időpont megfelel Önnek, kérjük, foglalja le weboldalunkon, és visszaigazoljuk. Egyéb időpont esetén kérjük, hívjon minket a ${CLINIC_PHONE} számon.\n\nÜdvözlettel,\nRadDent`,
           };
 
   const row = (label: string, value: string) =>
@@ -139,7 +139,8 @@ export const patientConfirmationEmail = (
           time: "Time",
           location: "Location",
           footerTop: "See you soon!",
-          footerBottom: "Need to reschedule or cancel? Call the clinic:",
+          footerBottom:
+            "Need to reschedule or cancel? Please let us know at least 24 hours in advance. Call the clinic:",
         }
       : l === "fa"
         ? {
@@ -151,7 +152,8 @@ export const patientConfirmationEmail = (
             time: "ساعت",
             location: "آدرس",
             footerTop: "به زودی می‌بینیمتان!",
-            footerBottom: "برای تغییر یا لغو وقت با کلینیک تماس بگیرید:",
+            footerBottom:
+              "برای تغییر یا لغو وقت، لطفاً حداقل ۲۴ ساعت قبل اطلاع دهید. تماس با کلینیک:",
           }
         : {
             subject: "A RadDent időpontja megerősítve",
@@ -162,7 +164,8 @@ export const patientConfirmationEmail = (
             time: "Idő",
             location: "Helyszín",
             footerTop: "Hamarosan találkozunk!",
-            footerBottom: "Módosításhoz vagy lemondáshoz hívja a rendelőt:",
+            footerBottom:
+              "Módosítás vagy lemondás esetén kérjük, legalább 24 órával korábban jelezze. Hívja a rendelőt:",
           };
 
   const row = (label: string, value: string) => `
