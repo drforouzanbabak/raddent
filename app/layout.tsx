@@ -7,6 +7,8 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { LanguageProvider } from "@/components/language-provider";
 import { getServicePrices } from "@/actions/google_sheet";
+import { SITE_URL } from "@/lib/site-config";
+import { JsonLd, OG_IMAGE, dentistJsonLd } from "@/lib/seo";
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -20,37 +22,37 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_NAME = "RadDent — Esztétikai fogászat Szigetszentmiklósban";
+const SITE_TITLE =
+  "RadDent – magán fogorvos és esztétikai fogászat Szigetszentmiklóson";
 const SITE_DESCRIPTION =
-  "A RadDent egy magán fogászati rendelő Szigetszentmiklósban, Dr. Forouzan Babak vezetésével. Esztétikai fogászat, implantátumok, koronák, fehérítés és megelőző ellátás — modern berendezések, prémium anyagok, nyugodt rendelés.";
+  "A RadDent magánfogászat Szigetszentmiklóson, Dr. Forouzan Babak vezetésével. Esztétikai fogászat, implantátum, korona, fogfehérítés és megelőző ellátás – foglaljon időpontot online.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: SITE_NAME,
+    default: SITE_TITLE,
     template: "%s · RadDent",
   },
   description: SITE_DESCRIPTION,
   keywords: [
     "RadDent",
+    "Rad Dent",
     "Dr Babak Forouzan",
     "Dr Forouzan Babak",
     "fogorvos Szigetszentmiklós",
-    "magán fogorvos",
-    "esztétikai fogászat Szigetszentmiklós",
+    "magán fogorvos Szigetszentmiklós",
     "fogászat Szigetszentmiklós",
+    "magánfogászat Szigetszentmiklós",
+    "esztétikai fogászat Szigetszentmiklós",
     "fogorvosi rendelő Szigetszentmiklós",
     "fogfehérítés",
     "fogászati implantátum",
     "korona",
     "héj veneer",
     "Semmelweis Egyetem fogorvos",
-    "XIV. kerület fogorvos",
     "dentist Szigetszentmiklós",
     "private dentist Szigetszentmiklós",
     "aesthetic dentistry Szigetszentmiklós",
-    "cosmetic dentistry Szigetszentmiklós",
-    "dental implants Szigetszentmiklós",
-    "teeth whitening Szigetszentmiklós",
   ],
   authors: [{ name: "Dr Babak Forouzan" }],
   creator: "RadDent",
@@ -63,15 +65,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "RadDent",
-    title: SITE_NAME,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     locale: "hu_HU",
-    alternateLocale: ["en_US"],
+    images: [OG_IMAGE],
   },
   twitter: {
-    card: "summary",
-    title: SITE_NAME,
+    card: "summary_large_image",
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
   robots: {
     index: true,
@@ -114,7 +117,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="hu"
+      lang="hu-HU"
       className={cn(
         "h-full",
         "dark",
@@ -132,6 +135,7 @@ export default async function RootLayout({
             "radial-gradient(circle at top, rgba(255,255,255,0.10), transparent 45%), radial-gradient(circle at bottom right, rgba(99,102,241,0.12), transparent 35%), #020617",
         }}
       >
+        <JsonLd data={dentistJsonLd()} />
         <LanguageProvider>
           <Header />
           <div className="flex-1">{children}</div>

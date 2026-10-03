@@ -1,6 +1,7 @@
+import { CLINIC } from "./site-config";
 import { normalizeNotificationLang } from "./notification-lang";
 
-const CLINIC_PHONE = "+36 70 746 0776";
+const CLINIC_PHONE = CLINIC.phone;
 
 const escapeHtml = (value: string) =>
   value

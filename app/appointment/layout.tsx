@@ -1,33 +1,19 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-const TITLE = "Időpontfoglalás";
-const DESCRIPTION =
-  "Foglaljon fogorvosi időpontot a szigetszentmiklósi RadDent rendelőjébe. Válasszon szabad dátumot és órát, adja meg adatait, és e-mailben kap megerősítést, amint a rendelő jóváhagyta.";
-
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
+export const metadata = pageMetadata({
+  title: "Időpontfoglalás fogorvoshoz Szigetszentmiklóson",
+  description:
+    "Foglaljon online időpontot a szigetszentmiklósi RadDent fogorvosi rendelőbe. Válasszon szabad napot és órát, és e-mailben értesítjük, amint a rendelő jóváhagyta a foglalást.",
+  path: "/appointment",
   keywords: [
     "időpontfoglalás fogorvos",
     "fogorvos időpontfoglalás Szigetszentmiklós",
+    "magán fogorvos Szigetszentmiklós időpont",
     "online fogorvos időpontfoglalás",
-    "magán fogorvos időpont",
     "book dental appointment Szigetszentmiklós",
-    "online dentist booking Szigetszentmiklós",
-    "RadDent appointment",
-    "Dr Babak Forouzan appointment",
-    "2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B. I. emelet 2. ajtó",
-    "XIV. kerület fogorvos",
+    "RadDent időpont",
   ],
-  openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+});
 
 export default function AppointmentLayout({
   children,

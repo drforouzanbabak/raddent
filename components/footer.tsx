@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 import { useT } from "@/components/language-provider";
+import { CLINIC } from "@/lib/site-config";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -35,12 +36,12 @@ function InstagramIcon({ className }: { className?: string }) {
 const SOCIAL_LINKS = [
   {
     label: "Facebook",
-    href: "https://www.facebook.com/FogorvosDentist",
+    href: CLINIC.social.facebook,
     Icon: FacebookIcon,
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/drforouzanbabak",
+    href: CLINIC.social.instagram,
     Icon: InstagramIcon,
   },
 ];
@@ -59,7 +60,7 @@ export function Footer({ categories }: { categories: string[] }) {
             <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="/icon.png"
-                alt="RadDent"
+                alt=""
                 width={32}
                 height={32}
                 className="size-8 rounded-md"
@@ -121,10 +122,7 @@ export function Footer({ categories }: { categories: string[] }) {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-slate-400" />
-                <span>
-                  2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B. I. emelet
-                  2. ajtó
-                </span>
+                <span>{CLINIC.fullAddress}</span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="mt-0.5 size-4 shrink-0 text-slate-400" />
@@ -133,19 +131,19 @@ export function Footer({ categories }: { categories: string[] }) {
               <li className="flex items-center gap-3">
                 <Phone className="size-4 shrink-0 text-slate-400" />
                 <a
-                  href="tel:+36707460776"
+                  href={CLINIC.phoneHref}
                   className="transition hover:text-white"
                 >
-                  +36 70 746 0776
+                  {CLINIC.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="size-4 shrink-0 text-slate-400" />
                 <a
-                  href="mailto:drforouzanbabak@gmail.com"
+                  href={`mailto:${CLINIC.email}`}
                   className="transition hover:text-white"
                 >
-                  drforouzanbabak@gmail.com
+                  {CLINIC.email}
                 </a>
               </li>
             </ul>

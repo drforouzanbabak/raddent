@@ -54,7 +54,7 @@ export default function AboutPage() {
               <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900 shadow-2xl shadow-black/40 aspect-[3/4] lg:aspect-[4/5]">
                 <Image
                   src="/my-photo.jpg"
-                  alt="Dr Babak Forouzan, Lead Dentist at RadDent"
+                  alt={t.about.portraitAlt}
                   fill
                   sizes="(min-width: 1024px) 40vw, 100vw"
                   className="object-cover object-center"

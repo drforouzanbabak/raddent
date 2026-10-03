@@ -29,7 +29,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2.5">
           <Image
             src="/icon.png"
-            alt="RadDent"
+            alt=""
             width={32}
             height={32}
             className="size-8 rounded-md"

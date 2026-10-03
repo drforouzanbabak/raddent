@@ -1,31 +1,12 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-const TITLE = "Felhasználási feltételek";
-const DESCRIPTION =
-  "A RadDent weboldal és online időpontfoglaló rendszer használatát szabályozó feltételek.";
-
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  keywords: [
-    "RadDent felhasználási feltételek",
-    "fogorvos feltételek",
-    "RadDent terms of use",
-    "online booking terms",
-  ],
-  robots: {
-    index: true,
-    follow: false,
-  },
-  openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+export const metadata = pageMetadata({
+  title: "Felhasználási feltételek",
+  description:
+    "A RadDent weboldal és online időpontfoglaló rendszer használatát szabályozó feltételek.",
+  path: "/terms",
+  keywords: ["RadDent felhasználási feltételek", "RadDent terms of use"],
+});
 
 export default function TermsLayout({
   children,

@@ -13,6 +13,8 @@ import { MESSAGES, type Lang, type Messages } from "@/lib/messages";
 
 const STORAGE_KEY = "lang";
 
+const HTML_LANG: Record<Lang, string> = { hu: "hu-HU", en: "en" };
+
 type LanguageContextValue = {
   lang: Lang;
   setLang: (lang: Lang) => void;
@@ -29,14 +31,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "en" || stored === "hu") {
       setLangState(stored);
-      document.documentElement.lang = stored;
+      document.documentElement.lang = HTML_LANG[stored];
     }
   }, []);
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
     window.localStorage.setItem(STORAGE_KEY, next);
-    document.documentElement.lang = next;
+    document.documentElement.lang = HTML_LANG[next];
   }, []);
 
   const toggle = useCallback(() => {

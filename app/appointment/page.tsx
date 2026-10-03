@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { cn } from "@/lib/utils";
+import { CLINIC } from "@/lib/site-config";
 import { useT, useLanguage } from "@/components/language-provider";
 
 type FormState = {
@@ -47,8 +48,7 @@ const initialFormState: FormState = {
   address: "",
   notes: "",
   summary: "",
-  location:
-    "2310 Szigetszentmiklós, Bajcsy-Zsilinszky utca 21/B. I. emelet 2. ajtó",
+  location: CLINIC.fullAddress,
   date: "",
   startTime: "",
   endTime: "",

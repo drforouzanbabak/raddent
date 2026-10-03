@@ -72,10 +72,10 @@ export const MESSAGES = {
       viewPriceList: "View price list →",
     },
     home: {
-      heroEyebrow: "Boutique dental care",
+      heroEyebrow: "Private dentistry in Szigetszentmiklós",
       heroTitle: "Dentistry that gives you your smile back.",
       heroSubtitle:
-        "I'm Dr Babak Forouzan — and at RadDent we believe every smile is precious. Modern procedures, premium materials, and the kind of care that gives you back your confidence.",
+        "I'm Dr Babak Forouzan, a dentist in Szigetszentmiklós — and at RadDent we believe every smile is precious. Modern procedures, premium materials, and the kind of care that gives you back your confidence.",
       bookAppointment: "Book an appointment",
       messageUs: "Message us",
       exploreTreatments: "Explore treatments",
@@ -85,6 +85,14 @@ export const MESSAGES = {
       portraitRole: "Lead Dentist",
       portraitName: "Dr Babak Forouzan",
       portraitSubtitle: "Aesthetic & Cosmetic Dentistry · 10+ years",
+      portraitAlt: "Dr Babak Forouzan, dentist at RadDent in Szigetszentmiklós",
+      galleryAlts: [
+        "Dr Babak Forouzan reviewing a panoramic X-ray with a patient",
+        "Dental examination in the RadDent treatment room in Szigetszentmiklós",
+        "Dr Babak Forouzan examining a patient's teeth in the dental chair",
+        "Patient in the dental chair with a panoramic X-ray on the monitor",
+        "Dr Babak Forouzan explaining an X-ray on the monitor to a patient",
+      ],
       servicesEyebrow: "Treatments",
       servicesTitle: "Specialist care across every chair.",
       servicesSubtitle:
@@ -169,6 +177,7 @@ export const MESSAGES = {
       cardSpecialty: "Aesthetic & general dentistry",
       cardLanguages: "Hungarian · English · Farsi",
       cardLocation: "Szigetszentmiklós, Hungary",
+      portraitAlt: "Dr Babak Forouzan, dentist at RadDent in Szigetszentmiklós",
       storyEyebrow: "My story",
       storyTitle: "A note from Dr Forouzan.",
       storyP1:
@@ -436,7 +445,7 @@ export const MESSAGES = {
     },
     footer: {
       tagline:
-        "Esztétikai fogászat Budapesten. Gyengéd ellátás, prémium anyagok, a mosoly, amire várt.",
+        "Esztétikai fogászat Szigetszentmiklóson. Gyengéd ellátás, prémium anyagok, a mosoly, amire várt.",
       services: "Szolgáltatások",
       visitUs: "Látogasson el",
       contact: "Kapcsolat",
@@ -447,10 +456,10 @@ export const MESSAGES = {
       viewPriceList: "Árlista megtekintése →",
     },
     home: {
-      heroEyebrow: "Személyre szabott fogászati ellátás",
+      heroEyebrow: "Magánfogászat Szigetszentmiklóson",
       heroTitle: "Fogászat, ami visszaadja a mosolyát.",
       heroSubtitle:
-        "Dr. Forouzan Babak vagyok és a RadDent-ben hisszük, hogy minden mosoly értékes. Modern eljárások, prémium anyagok és az a fajta törődés, ami visszaadja az önbizalmát.",
+        "Dr. Forouzan Babak vagyok, fogorvos Szigetszentmiklóson. A RadDent-ben hisszük, hogy minden mosoly értékes. Modern eljárások, prémium anyagok és az a fajta törődés, ami visszaadja az önbizalmát.",
       bookAppointment: "Időpontfoglalás",
       messageUs: "Üzenjen nekünk",
       exploreTreatments: "Kezeléseink",
@@ -460,6 +469,14 @@ export const MESSAGES = {
       portraitRole: "Vezető fogorvos",
       portraitName: "Dr. Forouzan Babak",
       portraitSubtitle: "Esztétikai és kozmetikai fogászat · 10+ év",
+      portraitAlt: "Dr. Forouzan Babak fogorvos – RadDent Szigetszentmiklós",
+      galleryAlts: [
+        "Dr. Forouzan Babak egy páciensével a panorámaröntgen-felvételt nézi",
+        "Fogászati vizsgálat a RadDent szigetszentmiklósi kezelőjében",
+        "Dr. Forouzan Babak a kezelőszékben ülő páciens fogait vizsgálja",
+        "Páciens a kezelőszékben, a monitoron panorámaröntgen-felvétel",
+        "Dr. Forouzan Babak a monitoron magyarázza el a röntgenfelvételt a páciensnek",
+      ],
       servicesEyebrow: "Kezelések",
       servicesTitle: "Szakorvosi ellátás minden székben.",
       servicesSubtitle:
@@ -544,7 +561,9 @@ export const MESSAGES = {
       cardEducation: "Semmelweis Egyetem · 2014",
       cardSpecialty: "Esztétikai és általános fogászat",
       cardLanguages: "Magyar · Angol · Perzsa",
-      cardLocation: "Budapest, Magyarország",
+      cardLocation: "Szigetszentmiklós, Magyarország",
+      portraitAlt:
+        "Dr. Forouzan Babak fogorvos a szigetszentmiklósi RadDent rendelőben",
       storyEyebrow: "Történetem",
       storyTitle: "Néhány szó Dr. Forouzantól.",
       storyP1:
@@ -668,7 +687,7 @@ export const MESSAGES = {
       sections: [
         {
           heading: "Mire szolgál ez a weboldal",
-          body: "A RadDent weboldal Dr. Forouzan Babak budapesti magán fogászati rendelőjének tájékoztató és időpontfoglaló oldala. Nem helyettesíti az orvosi tanácsadást. Az itt megjelenő információ általános jellegű és változhat.",
+          body: "A RadDent weboldal Dr. Forouzan Babak szigetszentmiklósi magánfogászati rendelőjének tájékoztató és időpontfoglaló oldala. Nem helyettesíti az orvosi tanácsadást. Az itt megjelenő információ általános jellegű és változhat.",
         },
         {
           heading: "Időpontfoglalás",

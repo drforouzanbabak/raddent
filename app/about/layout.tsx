@@ -1,33 +1,23 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-const TITLE = "Dr. Forouzan Babak bemutatkozása";
-const DESCRIPTION =
-  "Ismerje meg Dr. Forouzan Babakot — a Semmelweis Egyetemen végzett fogorvos, aki az esztétikai fogászatra, a gyengéd, fájdalommentes ellátásra és a természetes fogak megőrzésére összpontosít a szigetszentmiklósi RadDent rendelőjében.";
-
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
+export const metadata = pageMetadata({
+  title: "Dr. Forouzan Babak – fogorvos Szigetszentmiklóson",
+  description:
+    "Ismerje meg Dr. Forouzan Babakot, a Semmelweis Egyetemen végzett fogorvost, aki a szigetszentmiklósi RadDent rendelőben az esztétikai fogászatra, a kíméletes ellátásra és a természetes fogak megőrzésére összpontosít.",
+  path: "/about",
   keywords: [
     "Dr Babak Forouzan",
     "Dr Forouzan Babak",
     "Forouzan Babak fogorvos",
-    "Semmelweis Egyetem fogorvos",
-    "aesthetic dentist Szigetszentmiklós",
+    "fogorvos Szigetszentmiklós",
     "esztétikai fogorvos Szigetszentmiklós",
-    "fogorvos bemutatkozás",
-    "Persian dentist Szigetszentmiklós",
+    "Semmelweis Egyetem fogorvos",
     "perzsa fogorvos Szigetszentmiklós",
+    "angolul beszélő fogorvos Szigetszentmiklós",
+    "aesthetic dentist Szigetszentmiklós",
     "Farsi speaking dentist Szigetszentmiklós",
   ],
-  openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+});
 
 export default function AboutLayout({
   children,
