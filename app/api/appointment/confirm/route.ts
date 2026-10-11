@@ -4,9 +4,18 @@ import { getPatientById } from "@/actions/google_sheet";
 import {
   createPatientCalendarEvent,
   getCalendarEventsForDate,
+  isSlotAvailable,
 } from "@/actions/google_calendar";
 import { sendEmail } from "@/lib/functions";
-import { patientConfirmationEmail } from "@/lib/email-templates";
+import {
+  doctorSuggestionAcceptedEmail,
+  patientConfirmationEmail,
+} from "@/lib/email-templates";
+import {
+  normalizeNotificationLang,
+  type NotificationLang,
+} from "@/lib/notification-lang";
+import { CLINIC } from "@/lib/site-config";
 
 export const dynamic = "force-dynamic";
 
@@ -21,8 +30,12 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-const renderPage = (title: string, message: string) => `<!doctype html>
-<html lang="en"><head><meta charset="utf-8" />
+const renderPage = (
+  title: string,
+  message: string,
+  lang: NotificationLang = "en",
+) => `<!doctype html>
+<html lang="${lang}"${lang === "fa" ? ' dir="rtl"' : ""}><head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${escapeHtml(title)}</title>
 <style>
@@ -35,11 +48,66 @@ const renderPage = (title: string, message: string) => `<!doctype html>
 </style></head>
 <body><div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(message)}</p></div></body></html>`;
 
-const htmlResponse = (title: string, message: string, status: number) =>
-  new NextResponse(renderPage(title, message), {
+const htmlResponse = (
+  title: string,
+  message: string,
+  status: number,
+  lang?: NotificationLang,
+) =>
+  new NextResponse(renderPage(title, message, lang), {
     status,
     headers: { "Content-Type": "text/html; charset=utf-8" },
   });
+
+// Pages shown to the patient after clicking "Confirm" on a doctor-suggested
+// time, in the patient's language.
+const PATIENT_PAGES: Record<
+  NotificationLang,
+  {
+    confirmedTitle: string;
+    confirmed: (date: string, time: string) => string;
+    alreadyTitle: string;
+    already: string;
+    takenTitle: string;
+    taken: string;
+    errorTitle: string;
+    error: string;
+  }
+> = {
+  en: {
+    confirmedTitle: "Appointment confirmed",
+    confirmed: (date, time) =>
+      `Thank you! Your appointment on ${date} at ${time} is booked. We've sent you a confirmation email.`,
+    alreadyTitle: "Already confirmed",
+    already: "This appointment has already been confirmed.",
+    takenTitle: "Time no longer available",
+    taken: `Sorry, this time has been taken in the meantime. Please call us at ${CLINIC.phone} and we'll arrange your appointment by phone.`,
+    errorTitle: "Could not confirm",
+    error: `Something went wrong. Please call us at ${CLINIC.phone}.`,
+  },
+  hu: {
+    confirmedTitle: "Időpont megerősítve",
+    confirmed: (date, time) =>
+      `Köszönjük! Időpontját lefoglaltuk: ${date}, ${time}. Visszaigazoló e-mailt küldtünk Önnek.`,
+    alreadyTitle: "Már megerősítve",
+    already: "Ezt az időpontot már megerősítette.",
+    takenTitle: "Az időpont már nem elérhető",
+    taken: `Sajnáljuk, ezt az időpontot időközben lefoglalták. Kérjük, hívjon minket a ${CLINIC.phone} számon, és telefonon egyeztetjük az időpontot.`,
+    errorTitle: "A megerősítés nem sikerült",
+    error: `Hiba történt. Kérjük, hívjon minket a ${CLINIC.phone} számon.`,
+  },
+  fa: {
+    confirmedTitle: "وقت شما تأیید شد",
+    confirmed: (date, time) =>
+      `متشکریم! وقت شما برای ${date} ساعت ${time} ثبت شد. ایمیل تأیید برایتان ارسال شد.`,
+    alreadyTitle: "قبلاً تأیید شده",
+    already: "این وقت قبلاً تأیید شده است.",
+    takenTitle: "این زمان دیگر در دسترس نیست",
+    taken: `متأسفیم، این زمان در این فاصله رزرو شده است. لطفاً با شماره ${CLINIC.phone} تماس بگیرید تا وقت شما را تلفنی تنظیم کنیم.`,
+    errorTitle: "تأیید انجام نشد",
+    error: `مشکلی پیش آمد. لطفاً با شماره ${CLINIC.phone} تماس بگیرید.`,
+  },
+};
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -64,6 +132,10 @@ export async function GET(request: Request) {
     );
   }
 
+  const isPatient = payload.purpose === "patient";
+  const lang = normalizeNotificationLang(payload.language);
+  const patientText = PATIENT_PAGES[lang];
+
   try {
     const patient = await getPatientById(payload.patientId);
     if (!patient) {
@@ -87,11 +159,22 @@ export async function GET(request: Request) {
     );
 
     if (alreadyConfirmed) {
-      return htmlResponse(
-        "Already confirmed",
-        "This appointment has already been confirmed and added to the calendar.",
-        200,
-      );
+      return isPatient
+        ? htmlResponse(patientText.alreadyTitle, patientText.already, 200, lang)
+        : htmlResponse(
+            "Already confirmed",
+            "This appointment has already been confirmed and added to the calendar.",
+            200,
+          );
+    }
+
+    // The doctor picked a free slot when suggesting it, but it may have been
+    // booked since — don't double-book on the patient's behalf.
+    if (
+      isPatient &&
+      !(await isSlotAvailable(payload.date, payload.startTime))
+    ) {
+      return htmlResponse(patientText.takenTitle, patientText.taken, 409, lang);
     }
 
     await createPatientCalendarEvent(
@@ -125,6 +208,40 @@ export async function GET(request: Request) {
       }
     }
 
+    if (isPatient) {
+      const doctorEmail =
+        process.env.DOCTOR_EMAIL || process.env.GOOGLE_EMAIL_ADDRESS;
+      if (doctorEmail) {
+        try {
+          const { subject, html } = doctorSuggestionAcceptedEmail(
+            payload.language,
+            {
+              patientName: `${patient.firstName} ${patient.lastName}`.trim(),
+              date: payload.date,
+              startTime: payload.startTime,
+              endTime: payload.endTime,
+            },
+          );
+          await sendEmail({ to: doctorEmail, subject, html });
+        } catch (error: unknown) {
+          console.error(
+            "Doctor notification failed:",
+            (error as Error).message,
+          );
+        }
+      }
+
+      return htmlResponse(
+        patientText.confirmedTitle,
+        patientText.confirmed(
+          payload.date,
+          `${payload.startTime}–${payload.endTime}`,
+        ),
+        200,
+        lang,
+      );
+    }
+
     return htmlResponse(
       "Appointment confirmed",
       `${patient.firstName} ${patient.lastName} is booked for ${payload.date} at ${payload.startTime}.` +
@@ -135,6 +252,9 @@ export async function GET(request: Request) {
     );
   } catch (error: unknown) {
     console.error("Appointment confirmation failed:", (error as Error).message);
+    if (isPatient) {
+      return htmlResponse(patientText.errorTitle, patientText.error, 500, lang);
+    }
     return htmlResponse(
       "Could not confirm",
       (error as Error).message || "Something went wrong.",

@@ -1,6 +1,12 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
+export type AppointmentTokenPurpose = "doctor" | "patient";
+
 export type AppointmentTokenPayload = {
+  // "doctor": sent to the doctor for approval (may also suggest a new time).
+  // "patient": a doctor-suggested time the patient can accept.
+  // Tokens issued before this field existed are doctor tokens.
+  purpose?: AppointmentTokenPurpose;
   patientId: string;
   summary: string;
   location: string;

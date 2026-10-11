@@ -392,6 +392,29 @@ export const MESSAGES = {
       toastBookingPending:
         "We received your request. If the doctor is available, you'll get a confirmation email as soon as it's approved by the clinic.",
     },
+    suggest: {
+      eyebrow: "Doctor",
+      title: "Suggest another time",
+      subtitle:
+        "Pick a free date and time. The patient will get an email to confirm it — if it doesn't suit them, they'll be asked to call the clinic.",
+      patient: "Patient",
+      requested: "Requested",
+      chooseDate: "Choose a date",
+      chooseTime: "Choose a time",
+      chooseDateFirst: "Choose a date to view available times.",
+      loading: "Loading availability…",
+      noTimes: "No available times on this date.",
+      send: "Send suggestion to patient",
+      sending: "Sending…",
+      sentTitle: "Suggestion sent",
+      sentBody:
+        "{name} has been emailed the new time ({when}). It will be added to your calendar once they confirm.",
+      suggestAnother: "Suggest a different time",
+      failed: "Could not send the suggestion.",
+      invalidTitle: "Invalid link",
+      invalidBody:
+        "This link is invalid or has expired. Please contact the patient directly.",
+    },
   },
   hu: {
     nav: {
@@ -780,6 +803,29 @@ export const MESSAGES = {
       toastBookingSuccess: "Kérés megérkezett!",
       toastBookingPending:
         "Megkaptuk kérését. Ha az orvos ráér, jóváhagyás után e-mailben kap megerősítést a rendelőtől.",
+    },
+    suggest: {
+      eyebrow: "Orvos",
+      title: "Másik időpont javaslása",
+      subtitle:
+        "Válasszon egy szabad napot és időpontot. A páciens e-mailben kapja meg megerősítésre — ha nem megfelelő, a rendelő felhívására kérjük.",
+      patient: "Páciens",
+      requested: "Kért időpont",
+      chooseDate: "Válasszon napot",
+      chooseTime: "Válasszon időpontot",
+      chooseDateFirst: "Válasszon napot a szabad időpontok megtekintéséhez.",
+      loading: "Szabad időpontok betöltése…",
+      noTimes: "Ezen a napon nincs szabad időpont.",
+      send: "Javaslat küldése a páciensnek",
+      sending: "Küldés…",
+      sentTitle: "Javaslat elküldve",
+      sentBody:
+        "{name} e-mailt kapott az új időpontról ({when}). A megerősítés után bekerül a naptárba.",
+      suggestAnother: "Másik időpont javaslása",
+      failed: "A javaslatot nem sikerült elküldeni.",
+      invalidTitle: "Érvénytelen link",
+      invalidBody:
+        "Ez a link érvénytelen vagy lejárt. Kérjük, vegye fel a kapcsolatot közvetlenül a pácienssel.",
     },
   },
 } as const;

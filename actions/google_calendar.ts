@@ -212,7 +212,7 @@ export const createCalendarEvent = async (event: CalendarEventInput) => {
 
 const SLOT_DURATION_MINUTES = 30;
 
-const addSlotDuration = (time: string) => {
+export const addSlotDuration = (time: string) => {
   const [hours, minutes] = time.split(":").map(Number);
   const total = hours * 60 + minutes + SLOT_DURATION_MINUTES;
   const nextHour = Math.floor(total / 60) % 24;
@@ -342,6 +342,11 @@ export const getDaySlots = async (date: string): Promise<DaySlot[]> => {
 
     return { time: slot, available };
   });
+};
+
+export const isSlotAvailable = async (date: string, startTime: string) => {
+  const slots = await getDaySlots(date);
+  return slots.some((slot) => slot.time === startTime && slot.available);
 };
 
 export const updateCalendarEvent = async (

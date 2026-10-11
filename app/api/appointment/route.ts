@@ -71,6 +71,7 @@ export async function POST(request: Request) {
     }
 
     const token = signAppointmentToken({
+      purpose: "doctor",
       patientId: patient.id,
       summary: body.summary,
       location: body.location,
@@ -83,6 +84,7 @@ export async function POST(request: Request) {
 
     const origin = new URL(request.url).origin;
     const confirmUrl = `${origin}/api/appointment/confirm?token=${encodeURIComponent(token)}`;
+    const suggestUrl = `${origin}/appointment/suggest?token=${encodeURIComponent(token)}`;
 
     const { subject, html } = doctorApprovalEmail(requestLang, {
       patientName: `${patient.firstName} ${patient.lastName}`.trim(),
@@ -93,6 +95,7 @@ export async function POST(request: Request) {
       endTime: body.endTime,
       notes: body.notes,
       confirmUrl,
+      suggestUrl,
     });
 
     await sendEmail({ to: doctorEmail, subject, html });
