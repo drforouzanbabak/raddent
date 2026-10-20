@@ -7,6 +7,7 @@ import { getPatientById } from "@/actions/google_sheet";
 import { addSlotDuration, isSlotAvailable } from "@/actions/google_calendar";
 import { sendEmail } from "@/lib/functions";
 import { patientSuggestionEmail } from "@/lib/email-templates";
+import { buildBudapestISO } from "@/lib/budapest-time";
 
 type RequestBody = {
   token: string;
@@ -16,9 +17,6 @@ type RequestBody = {
 
 const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_REGEX = /^\d{2}:\d{2}$/;
-
-const buildBudapestISO = (date: string, time: string) =>
-  `${date}T${time}:00+02:00`;
 
 export async function POST(request: Request) {
   try {

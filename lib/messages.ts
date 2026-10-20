@@ -65,7 +65,12 @@ export const MESSAGES = {
       services: "Services",
       visitUs: "Visit Us",
       contact: "Contact",
-      hours: "Mon – Fri · 09:00 – 19:00",
+      hours: [
+        "Monday · 15:00 – 19:00",
+        "Tuesday · 08:30 – 12:00",
+        "Wednesday · 15:00 – 19:00",
+        "Thursday – Friday · 08:30 – 12:00",
+      ],
       copyright: "RadDent Clinic. All rights reserved.",
       privacy: "Privacy",
       terms: "Terms",
@@ -224,7 +229,7 @@ export const MESSAGES = {
       eyebrow: "Pricing",
       title: "Transparent pricing for every treatment.",
       description:
-        "Your final treatment plan and quote are confirmed in person after a consultation and diagnostic examination.",
+        "Prices are indicative. The final price depends on the condition of your teeth and the treatment you need; we will let you know before treatment begins.",
       disclaimer:
         "* Prices are in Hungarian Forints (HUF) and sometimes include a range or “from” designation.",
       searchEyebrow: "Search services",
@@ -472,7 +477,12 @@ export const MESSAGES = {
       services: "Szolgáltatások",
       visitUs: "Látogasson el",
       contact: "Kapcsolat",
-      hours: "Hétfő – Péntek · 08:00 – 17:00",
+      hours: [
+        "Hétfő · 15:00 – 19:00",
+        "Kedd · 08:30 – 12:00",
+        "Szerda · 15:00 – 19:00",
+        "Csütörtök – Péntek · 08:30 – 12:00",
+      ],
       copyright: "RadDent Klinika. Minden jog fenntartva.",
       privacy: "Adatvédelem",
       terms: "Feltételek",
@@ -633,7 +643,7 @@ export const MESSAGES = {
       eyebrow: "Árak",
       title: "Átlátható árak minden kezeléshez.",
       description:
-        "A végleges kezelési terv és árajánlat személyesen kerül megerősítésre konzultációt és diagnosztikai vizsgálatot követően.",
+        "Az árak tájékoztató jellegűek. A végleges ár a fogak állapotától és a szükséges kezeléstől függ; erről a kezelés megkezdése előtt tájékoztatjuk.",
       disclaimer:
         "* Az árak magyar forintban (HUF) értendők, és néha tartományt vagy „-tól” jelzést tartalmaznak.",
       searchEyebrow: "Keresés a szolgáltatások között",

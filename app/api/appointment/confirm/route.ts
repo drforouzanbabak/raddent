@@ -16,11 +16,9 @@ import {
   type NotificationLang,
 } from "@/lib/notification-lang";
 import { CLINIC } from "@/lib/site-config";
+import { buildBudapestISO } from "@/lib/budapest-time";
 
 export const dynamic = "force-dynamic";
-
-const buildBudapestISO = (date: string, time: string) =>
-  `${date}T${time}:00+02:00`;
 
 const escapeHtml = (value: string) =>
   value

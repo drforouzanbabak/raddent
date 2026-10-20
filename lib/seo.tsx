@@ -66,6 +66,14 @@ export const dentistJsonLd = () => ({
     "@type": "PostalAddress",
     ...CLINIC.address,
   },
+  openingHoursSpecification: [
+    { dayOfWeek: ["Monday", "Wednesday"], opens: "15:00", closes: "19:00" },
+    {
+      dayOfWeek: ["Tuesday", "Thursday", "Friday"],
+      opens: "08:30",
+      closes: "12:00",
+    },
+  ].map((spec) => ({ "@type": "OpeningHoursSpecification", ...spec })),
   sameAs: [CLINIC.social.facebook, CLINIC.social.instagram],
   employee: {
     "@type": "Person",

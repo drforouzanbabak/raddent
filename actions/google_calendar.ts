@@ -4,6 +4,7 @@ import {
   normalizeNotificationLang,
   type NotificationLang,
 } from "@/lib/notification-lang";
+import { buildBudapestISO } from "@/lib/budapest-time";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
@@ -246,9 +247,6 @@ const buildDaySlots = (daySchedule: {
   return slots;
 };
 
-const buildBudapestDateTime = (date: string, time: string) =>
-  `${date}T${time}:00+02:00`;
-
 const rangesOverlap = (
   startA: string,
   endA: string,
@@ -269,8 +267,8 @@ export const getCalendarBusyTimes = async (date: string) => {
 
   const response = await calendar.events.list({
     calendarId,
-    timeMin: buildBudapestDateTime(date, "00:00"),
-    timeMax: buildBudapestDateTime(date, "23:59"),
+    timeMin: buildBudapestISO(date, "00:00"),
+    timeMax: buildBudapestISO(date, "23:59"),
     timeZone: "Europe/Budapest",
     singleEvents: true,
     orderBy: "startTime",
@@ -305,8 +303,8 @@ export const getCalendarEventsForDate = async (date: string) => {
 
   const response = await calendar.events.list({
     calendarId,
-    timeMin: buildBudapestDateTime(date, "00:00"),
-    timeMax: buildBudapestDateTime(date, "23:59"),
+    timeMin: buildBudapestISO(date, "00:00"),
+    timeMax: buildBudapestISO(date, "23:59"),
     timeZone: "Europe/Budapest",
     singleEvents: true,
     orderBy: "startTime",
@@ -330,8 +328,8 @@ export const getDaySlots = async (date: string): Promise<DaySlot[]> => {
   const busyTimes = await getCalendarBusyTimes(date);
 
   return slots.map((slot) => {
-    const slotStart = buildBudapestDateTime(date, slot);
-    const slotEnd = buildBudapestDateTime(date, addSlotDuration(slot));
+    const slotStart = buildBudapestISO(date, slot);
+    const slotEnd = buildBudapestISO(date, addSlotDuration(slot));
 
     const available = !busyTimes.some((interval) => {
       if (!interval.start || !interval.end) {

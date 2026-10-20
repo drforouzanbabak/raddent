@@ -126,7 +126,11 @@ export function Footer({ categories }: { categories: string[] }) {
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="mt-0.5 size-4 shrink-0 text-slate-400" />
-                <span>{t.footer.hours}</span>
+                <ul className="space-y-1">
+                  {t.footer.hours.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="size-4 shrink-0 text-slate-400" />
