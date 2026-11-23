@@ -42,7 +42,7 @@ export const MESSAGES = {
         },
         {
           q: "Do you handle dental emergencies?",
-          a: "Yes — I'm available for emergencies because dental problems can't wait. I keep dedicated time slots open for urgent cases and stay reachable outside regular hours. Common emergencies include severe toothache, a broken tooth, a lost filling, or dental trauma. Please call immediately if you have one of these issues.",
+          a: "Yes, I'm available for emergencies because dental problems can't wait. I keep dedicated time slots open for urgent cases and stay reachable outside regular hours. Common emergencies include severe toothache, a broken tooth, a lost filling, or dental trauma. Please call immediately if you have one of these issues.",
         },
         {
           q: "What technology do you use in the practice?",
@@ -50,12 +50,12 @@ export const MESSAGES = {
         },
         {
           q: "Do you offer orthodontics?",
-          a: "No, I don't perform orthodontic treatment. I focus on general and aesthetic dentistry — including fillings, restorations, aesthetic treatments, whitening, and oral hygiene care. When orthodontics is needed, I refer patients to a trusted specialist.",
+          a: "No, I don't perform orthodontic treatment. I focus on general and aesthetic dentistry, including fillings, restorations, aesthetic treatments, whitening, and oral hygiene care. When orthodontics is needed, I refer patients to a trusted specialist.",
         },
       ],
       ctaTitle: "Still have a question?",
       ctaSubtitle:
-        "Send a message and I'll get back to you personally — usually within a day.",
+        "Send a message and I'll get back to you personally, usually within a day.",
       ctaButton: "Message us",
       bookButton: "Book a consultation",
     },
@@ -80,7 +80,7 @@ export const MESSAGES = {
       heroEyebrow: "Private dentistry in Szigetszentmiklós",
       heroTitle: "Dentistry that gives you your smile back.",
       heroSubtitle:
-        "I'm Dr Babak Forouzan, a dentist in Szigetszentmiklós — and at RadDent we believe every smile is precious. Modern procedures, premium materials, and the kind of care that gives you back your confidence.",
+        "I'm Dr Babak Forouzan, a dentist in Szigetszentmiklós, and at RadDent we believe every smile is precious. Modern procedures, premium materials, and the kind of care that gives you back your confidence.",
       bookAppointment: "Book an appointment",
       messageUs: "Message us",
       exploreTreatments: "Explore treatments",
@@ -101,7 +101,7 @@ export const MESSAGES = {
       servicesEyebrow: "Treatments",
       servicesTitle: "Specialist care across every chair.",
       servicesSubtitle:
-        "Implantology, cosmetic, orthodontic and preventive treatments — all delivered by clinicians who have built their reputations on these procedures.",
+        "Implantology, cosmetic, orthodontic and preventive treatments, all delivered by clinicians who have built their reputations on these procedures.",
       services: [
         {
           title: "Premium Implants",
@@ -116,7 +116,7 @@ export const MESSAGES = {
         {
           title: "Studio Whitening",
           description:
-            "In-clinic whitening that protects enamel — up to eight shades brighter.",
+            "In-clinic whitening that protects enamel, up to eight shades brighter.",
         },
         {
           title: "Orthodontics",
@@ -134,6 +134,28 @@ export const MESSAGES = {
             "Same-day appointments for pain, trauma, and urgent repairs.",
         },
       ],
+      teamEyebrow: "Our team",
+      teamReadMore: "Read more",
+      teamTitle: "Meet the people behind your smile.",
+      teamSubtitle:
+        "Experienced specialists who plan every treatment together, so you always get the right expert for your case.",
+      team: [
+        {
+          name: "Dr. Amir Arshami",
+          role: "Dentist, general physician, implantologist",
+          bio: "As a dentist and general physician, I have been working in dental implantology for nearly ten years, with a particular focus on complex oral rehabilitation. My specialty is restoring complete tooth loss with implants, especially using the All-on-4 and All-on-X techniques. I have significant experience in bone grafting procedures and complex implant treatments. My goal is to give my patients long-lasting, stable, functional and aesthetic solutions using the most modern procedures, restoring the joy of a confident smile and comfortable chewing.",
+        },
+        {
+          name: "Dr. Forouzan Babak",
+          role: "Dentist",
+          bio: "I earned my dental degree at Semmelweis University and have been practising as a dentist since 2014.\n\nIn my work, what matters most to me is respect for human dignity and understanding my patients' pain, fears and concerns. I recommend to everyone the treatment I would choose for my own family member in a similar situation.\n\nAesthetic dentistry is especially close to my heart, because after these treatments I have seen many sincere, heartfelt smiles. It is a great joy when someone gains not only a more beautiful smile but also new self-confidence.\n\nOver the years, my patients' trust has been the greatest value to me. That is why I strive to keep pain and stress to a minimum during treatment, so that every patient feels: I am listening, I understand, and they are safe.",
+        },
+        {
+          name: "Éva",
+          role: "Dental assistant and dental hygienist",
+          bio: "I'm Évica, a dental assistant and dental hygienist, but above all, someone who loves helping others from the heart.\n\nMany people walk into a dental office feeling fearful and anxious, yet dental care can be a beautiful, calm and liberating experience.\n\nTo me, this profession is a true miracle. My goal is to help you keep your smile healthy and beautiful, while also caring for your soul and bringing a genuine, carefree glow to your face.",
+        },
+      ],
       studioEyebrow: "Inside the studio",
       studioTitle: "A space designed to feel like anything but a dentist.",
       studioSubtitle:
@@ -146,7 +168,7 @@ export const MESSAGES = {
         {
           title: "Boutique experience",
           description:
-            "Private treatment suites, calm lighting, weighted blankets — designed to soothe even the most anxious patients.",
+            "Private treatment suites, calm lighting, weighted blankets, designed to soothe even the most anxious patients.",
         },
         {
           title: "Specialist team",
@@ -156,9 +178,19 @@ export const MESSAGES = {
         {
           title: "Modern technology",
           description:
-            "3D imaging, digital impressions, and CAD/CAM milling — fewer visits, more precise results.",
+            "3D imaging, digital impressions, and CAD/CAM milling, fewer visits, more precise results.",
         },
       ],
+      reviews: [
+        { name: "Misinszky Noémi", text: "A patient, kind and cheerful doctor and assistant." },
+        { name: "Orsolya Kis", text: "I recommend them wholeheartedly! They do professional work, both as people and as professionals. They create a very friendly atmosphere with their patients. The doctor is a fantastic, great guy, and Enikő, the assistant, is all heart and charm. I always went to my treatments happily (if you can say that about the dentist) and always left satisfied." },
+        { name: "Ferenczi Ildikó", text: "Babak helped me solve a long-standing problem. For a long time I could not have a hot soup or a cold drink without pain. He found a solution that had never come up during my previous dental treatments, so now I can finally eat and drink with pleasure. It may seem like a small thing, but it adds to the little joys of life every day. Thank you! His assistants are also very kind; together with the doctor they make a great team, and they ease the tension and anxiety that come with the territory with humour." },
+        { name: "Erzsébet Muth", text: "I have never met such a humane attitude in healthcare. Attentive, kind and empathetic. Thanks to the doctor and the fantastic assistant!" },
+        { name: "Annamária Pál-Kovács", text: "A dental practice you walk into smiling and walk out of smiling. My endless gratitude to the doctor and the ladies. Thank you!" },
+        { name: "Anna Tóth", text: "A very kind, patient and professional dentist. I blinked once and my wisdom tooth was already out, without any pain. Thank you again!" },
+        { name: "Zoltán Toldi", text: "The doctor and the assistant are very kind, attentive, precise and professional. I recommend them to everyone with complete confidence." },
+      ],
+
       reviewsEyebrow: "Loved on Facebook",
       reviewsTitle: "What our patients say.",
       reviewsSubtitle: "Real reviews from real patients on our Facebook page,",
@@ -172,7 +204,7 @@ export const MESSAGES = {
       eyebrow: "About",
       title: "Meet Dr Babak Forouzan.",
       subtitle:
-        "I graduated from Semmelweis University in 2014. The thing I have learned in the years since is that the fear of dentistry is almost always greater than the treatment itself — and my job is to make sure that never holds you back from the care you deserve.",
+        "I graduated from Semmelweis University in 2014. The thing I have learned in the years since is that the fear of dentistry is almost always greater than the treatment itself, and my job is to make sure that never holds you back from the care you deserve.",
       bookConsultation: "Book a consultation",
       seePricing: "See pricing",
       cardRole: "Lead Dentist",
@@ -188,11 +220,11 @@ export const MESSAGES = {
       storyP1:
         "I really love aesthetic dentistry because it gives people back their self-confidence. I feel the best when I see that quiet satisfaction in my patients' eyes.",
       storyP2:
-        "For me, the two most beautiful things in the world are music and a smile. I hope to give my patients many smiles — and I trust that life has the most beautiful surprises in store for all of us.",
+        "For me, the two most beautiful things in the world are music and a smile. I hope to give my patients many smiles, and I trust that life has the most beautiful surprises in store for all of us.",
       storyP3:
         "I believe every tooth is precious. My goal is to preserve the natural ones as much as possible. I work with modern procedures and premium materials, because the most important thing to me is the smile of the person sitting in front of me.",
       quote:
-        "After more than ten years of experience, I have come to understand that patients' fears are often greater than reality itself. During every treatment, I strive — both as a doctor and as a person — to ensure that those who trust me feel as safe as possible and do not experience pain during the treatment.",
+        "After more than ten years of experience, I have come to understand that patients' fears are often greater than reality itself. During every treatment, I strive, both as a doctor and as a person, to ensure that those who trust me feel as safe as possible and do not experience pain during the treatment.",
       attributionName: "Dr Babak Forouzan",
       attributionRole: "Lead Dentist, RadDent",
       valuesEyebrow: "How I work",
@@ -203,7 +235,7 @@ export const MESSAGES = {
         {
           title: "Calm, painless care",
           description:
-            "Gentle technique, generous anaesthesia, and unhurried appointments — designed around how you feel, not the clock.",
+            "Gentle technique, generous anaesthesia, and unhurried appointments, designed around how you feel, not the clock.",
         },
         {
           title: "Honest treatment plans",
@@ -218,7 +250,7 @@ export const MESSAGES = {
         {
           title: "Multilingual practice",
           description:
-            "Consultations in Hungarian, English, and Farsi — clear communication is part of the treatment.",
+            "Consultations in Hungarian, English, and Farsi, clear communication is part of the treatment.",
         },
       ],
       meetCtaTitle: "Come and meet me.",
@@ -245,7 +277,7 @@ export const MESSAGES = {
       servicePlural: "services",
       ctaTitle: "Not sure where to start?",
       ctaSubtitle:
-        "Book a consultation and we'll prepare a written treatment plan with a fixed quote — no commitment.",
+        "Book a consultation and we'll prepare a written treatment plan with a fixed quote, no commitment.",
       bookConsultation: "Book a consultation",
     },
     privacy: {
@@ -261,7 +293,7 @@ export const MESSAGES = {
         },
         {
           heading: "What we collect",
-          body: "We only collect the information you enter into the booking form: your first and last name, email address, phone number, date of birth, postal address, any notes you choose to share, and your selected interface language. Some of this data — your date of birth, and anything health-related you write in the notes field — is treated as special-category health data under GDPR Article 9, and we process it solely for the purpose of providing your dental care. We do not run analytics, advertising trackers, or third-party cookies. Your selected language is stored in your browser's localStorage so the site remembers your preference between visits.",
+          body: "We only collect the information you enter into the booking form: your first and last name, email address, phone number, date of birth, postal address, any notes you choose to share, and your selected interface language. Some of this data, your date of birth, and anything health-related you write in the notes field, is treated as special-category health data under GDPR Article 9, and we process it solely for the purpose of providing your dental care. We do not run analytics, advertising trackers, or third-party cookies. Your selected language is stored in your browser's localStorage so the site remembers your preference between visits.",
         },
         {
           heading: "How we use your information",
@@ -269,7 +301,7 @@ export const MESSAGES = {
         },
         {
           heading: "Legal basis for processing",
-          body: "We process your personal data on the following legal bases under GDPR: (a) performance of a contract and pre-contractual steps at your request — Article 6(1)(b) — to schedule and provide the appointment you have asked for; (b) provision of healthcare — Article 9(2)(h) — for special-category health data such as your date of birth and any clinical information in the notes field; (c) legitimate interests — Article 6(1)(f) — to notify the clinic of your appointment request and to email you once it is approved; (d) legal obligation — Article 6(1)(c) — to retain medical records for the period required by Hungarian healthcare law.",
+          body: "We process your personal data on the following legal bases under GDPR: (a) performance of a contract and pre-contractual steps at your request, Article 6(1)(b), to schedule and provide the appointment you have asked for; (b) provision of healthcare, Article 9(2)(h), for special-category health data such as your date of birth and any clinical information in the notes field; (c) legitimate interests, Article 6(1)(f), to notify the clinic of your appointment request and to email you once it is approved; (d) legal obligation, Article 6(1)(c), to retain medical records for the period required by Hungarian healthcare law.",
         },
         {
           heading: "Who has access",
@@ -281,11 +313,11 @@ export const MESSAGES = {
         },
         {
           heading: "How long we keep your data",
-          body: "Hungarian healthcare law — Act XLVII of 1997 on the Processing and Protection of Health and Related Personal Data (Eüak. tv.) — requires us to retain medical documentation for at least 30 years from the date it is recorded, and at least 50 years for imaging records. We keep your patient record for these statutory periods. Non-medical contact information that is not part of the medical record will be deleted on your request. After the statutory retention period, records are securely deleted or fully anonymised.",
+          body: "Hungarian healthcare law, Act XLVII of 1997 on the Processing and Protection of Health and Related Personal Data (Eüak. tv.), requires us to retain medical documentation for at least 30 years from the date it is recorded, and at least 50 years for imaging records. We keep your patient record for these statutory periods. Non-medical contact information that is not part of the medical record will be deleted on your request. After the statutory retention period, records are securely deleted or fully anonymised.",
         },
         {
           heading: "Your rights",
-          body: "Under GDPR you have the right to request access to your personal data, to ask for it to be corrected, and — subject to the statutory retention period for medical records — to ask for it to be deleted or for processing to be restricted. You may also object to processing based on legitimate interests (for example, our appointment request emails). To exercise any of these rights, email us — see Contact below.",
+          body: "Under GDPR you have the right to request access to your personal data, to ask for it to be corrected, and, subject to the statutory retention period for medical records, to ask for it to be deleted or for processing to be restricted. You may also object to processing based on legitimate interests (for example, our appointment request emails). To exercise any of these rights, email us, see Contact below.",
         },
         {
           heading: "Right to lodge a complaint",
@@ -401,7 +433,7 @@ export const MESSAGES = {
       eyebrow: "Doctor",
       title: "Suggest another time",
       subtitle:
-        "Pick a free date and time. The patient will get an email to confirm it — if it doesn't suit them, they'll be asked to call the clinic.",
+        "Pick a free date and time. The patient will get an email to confirm it, if it doesn't suit them, they'll be asked to call the clinic.",
       patient: "Patient",
       requested: "Requested",
       chooseDate: "Choose a date",
@@ -467,7 +499,7 @@ export const MESSAGES = {
       ],
       ctaTitle: "Van még kérdése?",
       ctaSubtitle:
-        "Küldjön üzenetet és személyesen válaszolok — általában egy napon belül.",
+        "Küldjön üzenetet és személyesen válaszolok, általában egy napon belül.",
       ctaButton: "Üzenjen nekünk",
       bookButton: "Konzultáció foglalása",
     },
@@ -513,7 +545,7 @@ export const MESSAGES = {
       servicesEyebrow: "Kezelések",
       servicesTitle: "Szakorvosi ellátás minden székben.",
       servicesSubtitle:
-        "Implantológia, esztétikai, fogszabályozási és megelőző kezelések — mindezt olyan szakemberek végzik, akik ezekre az eljárásokra építették hírnevüket.",
+        "Implantológia, esztétikai, fogszabályozási és megelőző kezelések, mindezt olyan szakemberek végzik, akik ezekre az eljárásokra építették hírnevüket.",
       services: [
         {
           title: "Prémium implantátumok",
@@ -528,7 +560,7 @@ export const MESSAGES = {
         {
           title: "Stúdió fogfehérítés",
           description:
-            "Rendelői fogfehérítés, ami óvja a zománcot — akár nyolc árnyalattal világosabb.",
+            "Rendelői fogfehérítés, ami óvja a zománcot, akár nyolc árnyalattal világosabb.",
         },
         {
           title: "Fogszabályozás",
@@ -546,6 +578,28 @@ export const MESSAGES = {
             "Aznapi időpontok fájdalom, sérülés és sürgős javítások esetén.",
         },
       ],
+      teamEyebrow: "Munkatársaink",
+      teamReadMore: "Tovább olvasom",
+      teamTitle: "Ismerje meg csapatunkat.",
+      teamSubtitle:
+        "Tapasztalt szakemberek, akik minden kezelést közösen terveznek meg, így mindig a megfelelő szakértő foglalkozik Önnel.",
+      team: [
+        {
+          name: "Dr. Amir Arshami",
+          role: "Fogorvos, általános orvos, implantológus",
+          bio: "Fogorvosként és általános orvosként közel tíz éve foglalkozom dentális implantológiával, különös hangsúlyt fektetve a komplex szájrehabilitációkra. Szakterületem a teljes foghiány implantátumokkal történő helyreállítása, különösen az All-on-4 és All-on-X technikák alkalmazásával. Jelentős tapasztalattal rendelkezem a csontpótló beavatkozások, valamint az összetett implantológiai kezelések területén. Célom, hogy pácienseim számára a legmodernebb eljárások segítségével hosszú távon stabil, funkcionális és esztétikus megoldásokat biztosítsak, visszaadva számukra a magabiztos mosoly és a kényelmes rágás örömét.",
+        },
+        {
+          name: "Dr. Forouzan Babak",
+          role: "Fogorvos",
+          bio: "A Semmelweis Egyetemen szereztem fogorvosi diplomát, és 2014 óta dolgozom fogorvosként.\n\nMunkám során a legfontosabb számomra az emberi méltóság tisztelete, valamint pácienseim fájdalmának, félelmeinek és aggodalmainak megértése. Mindenkinek olyan kezelést javaslok, amelyet hasonló helyzetben a saját családtagom számára is választanék.\n\nKülönösen közel áll hozzám az esztétikai fogászat, mert az ilyen kezelések után sok őszinte, szívből jövő mosolyt láthattam. Nagy öröm számomra, amikor valaki nemcsak szebb mosolyt, hanem új önbizalmat is kap.\n\nAz elmúlt években pácienseim bizalma jelentette számomra a legnagyobb értéket. Ezért arra törekszem, hogy a kezelések során a fájdalmat és a stresszt a lehető legkisebbre csökkentsem, és minden páciens érezze: figyelek rá, megértem, és biztonságban van.",
+        },
+        {
+          name: "Éva",
+          role: "Fogászati asszisztens és dentálhigiénikus",
+          bio: "Évica vagyok, fogászati asszisztens és dentálhigiénikus, de leginkább olyan ember, aki szívből szeret segíteni másoknak.\n\nSokan félve, szorongva lépnek be egy fogászati rendelőbe, pedig a fogápolás lehet szép, nyugodt és felszabadító élmény is.\n\nSzámomra ez a hivatás egy igazi csoda. Célom, hogy segítsek megőrizni mosolyotok egészségét és szépségét, miközben a lelketekkel is törődöm, és valódi, felszabadult ragyogást csalok az arcotokra.",
+        },
+      ],
       studioEyebrow: "A stúdió belül",
       studioTitle: "Olyan tér, ami bármi inkább, mint egy fogorvosi rendelő.",
       studioSubtitle:
@@ -558,7 +612,7 @@ export const MESSAGES = {
         {
           title: "Személyre szabott fogászati ellátás",
           description:
-            "Privát kezelőhelyiségek, nyugodt megvilágítás, súlyozott takarók — a legszorongóbb páciensek megnyugtatására tervezve.",
+            "Privát kezelőhelyiségek, nyugodt megvilágítás, súlyozott takarók, a legszorongóbb páciensek megnyugtatására tervezve.",
         },
         {
           title: "Szakorvosi csapat",
@@ -568,9 +622,19 @@ export const MESSAGES = {
         {
           title: "Modern technológia",
           description:
-            "3D képalkotás, digitális lenyomatok és CAD/CAM marás — kevesebb látogatás, pontosabb eredmények.",
+            "3D képalkotás, digitális lenyomatok és CAD/CAM marás, kevesebb látogatás, pontosabb eredmények.",
         },
       ],
+      reviews: [
+        { name: "Misinszky Noémi", text: "Türelmes, kedves, vidám orvos és asszisztens." },
+        { name: "Orsolya Kis", text: "Szívből ajánlom őket! Mint emberileg, mint szakmailag profi munkát végeznek! Nagyon barátságos légkört alakítanak ki a pácinsekkel. A Doktor úr fantasztikusan jófej, nagyszerű ember. Enikő, az asszisztens hölgy pedig egy csupa szív, csupa báj. Mindig örömmel mentem a kezelésekre, ha lehet ilyet mondani egy fogászatra, és mindig elégedetten távoztam onnan." },
+        { name: "Ferenczi Ildikó", text: "Babak egy régóta húzódó problémát segített megoldani. Hosszú ideje nem tudtam egy meleg levest vagy egy hideg italt elfogyasztani fájdalom nélkül. Sikerült olyan megoldást találnia, ami a korábbi fogászati kezeleseimen nem merült fel, így végre èlvezettel ihatok, ehetek. Apróságnak tűnhet, mégis az élet apró örömeihez tesz hozzá nap mint nap. Köszönöm:) Az asszisztensei is nagyon kedvesek, a doktor úrral együtt jó csapatot alkotnak, a \"műfajból\" adódó feszültségeket, szorongasokat pedig humorral oldják fel:)" },
+        { name: "Erzsébet Muth", text: "Ilyen szintű emberséges hozzáállással még nem találkoztam az egészségügyben. Figyelmesek, kedvesek empatikusak. Köszönet a doktor úrnak és a fantasztikus asszisztens hölgynek!" },
+        { name: "Annamária Pál-Kovács", text: "Egy fogászat ahova mosolyogva mész be, és ahonnan mosolyogva jössz ki. Végtelen hálám a Doktor Ùrnak és a hölgyeknek. Köszönöm!" },
+        { name: "Anna Tóth", text: "Nagyon kedves, türelmes és profi fogorvos. Egyet pislogtam és kint is volt a bölcsességfogam, mindenféle fájdalom nélkül. Köszönöm még egyszer!" },
+        { name: "Zoltán Toldi", text: "Nagyon kedves figyelmes precíz profi a Doktorúr és asszisztens mindenkinek nyugodt szívvel ajánlom" },
+      ],
+
       reviewsEyebrow: "Szeretik a Facebookon",
       reviewsTitle: "Amit pácienseink mondanak.",
       reviewsSubtitle:
@@ -585,7 +649,7 @@ export const MESSAGES = {
       eyebrow: "Rólam",
       title: "Ismerje meg Dr. Forouzan Babakot.",
       subtitle:
-        "2014-ben szereztem diplomát a Semmelweis Egyetemen. Az eltelt évek alatt megtanultam, hogy a fogászattól való félelem szinte mindig nagyobb, mint maga a kezelés — és az én feladatom, hogy ez soha ne álljon az Ön megérdemelt ellátásának útjába.",
+        "2014-ben szereztem diplomát a Semmelweis Egyetemen. Az eltelt évek alatt megtanultam, hogy a fogászattól való félelem szinte mindig nagyobb, mint maga a kezelés, és az én feladatom, hogy ez soha ne álljon az Ön megérdemelt ellátásának útjába.",
       bookConsultation: "Konzultáció foglalása",
       seePricing: "Árak megtekintése",
       cardRole: "Vezető fogorvos",
@@ -602,11 +666,11 @@ export const MESSAGES = {
       storyP1:
         "Nagyon szeretem az esztétikai fogászatot, mert visszaadja az emberek önbizalmát. Akkor érzem magam a legjobban, amikor azt a csendes elégedettséget látom a pácienseim szemében.",
       storyP2:
-        "Számomra a világ két legszebb dolga a zene és egy mosoly. Remélem, hogy sok mosolyt adhatok pácienseimnek — és hiszem, hogy az élet a legszebb meglepetéseket tartogatja mindannyiunk számára.",
+        "Számomra a világ két legszebb dolga a zene és egy mosoly. Remélem, hogy sok mosolyt adhatok pácienseimnek, és hiszem, hogy az élet a legszebb meglepetéseket tartogatja mindannyiunk számára.",
       storyP3:
         "Hiszem, hogy minden fog értékes. Célom, hogy a természetes fogakat amennyire csak lehet, megőrizzem. Modern eljárásokkal és prémium anyagokkal dolgozom, mert a legfontosabb számomra az előttem ülő ember mosolya.",
       quote:
-        "Több mint tíz év tapasztalat után megértettem, hogy a páciensek félelme gyakran nagyobb, mint a valóság. Minden kezelés során arra törekszem — orvosként és emberként egyaránt —, hogy azok, akik bíznak bennem, a lehető legbiztonságosabban érezzék magukat, és ne tapasztaljanak fájdalmat a kezelés során.",
+        "Több mint tíz év tapasztalat után megértettem, hogy a páciensek félelme gyakran nagyobb, mint a valóság. Minden kezelés során arra törekszem, orvosként és emberként egyaránt, hogy azok, akik bíznak bennem, a lehető legbiztonságosabban érezzék magukat, és ne tapasztaljanak fájdalmat a kezelés során.",
       attributionName: "Dr. Forouzan Babak",
       attributionRole: "Vezető fogorvos, RadDent",
       valuesEyebrow: "Hogyan dolgozom",
@@ -617,7 +681,7 @@ export const MESSAGES = {
         {
           title: "Nyugodt, fájdalommentes ellátás",
           description:
-            "Gyengéd technika, bőséges érzéstelenítés és kényelmes tempójú időpontok — az Ön érzéseit, nem az órát figyelve.",
+            "Gyengéd technika, bőséges érzéstelenítés és kényelmes tempójú időpontok, az Ön érzéseit, nem az órát figyelve.",
         },
         {
           title: "Őszinte kezelési tervek",
@@ -632,7 +696,7 @@ export const MESSAGES = {
         {
           title: "Többnyelvű praxis",
           description:
-            "Konzultációk magyar, angol és perzsa nyelven — a tiszta kommunikáció a kezelés része.",
+            "Konzultációk magyar, angol és perzsa nyelven, a tiszta kommunikáció a kezelés része.",
         },
       ],
       meetCtaTitle: "Találkozzunk személyesen.",
@@ -659,7 +723,7 @@ export const MESSAGES = {
       servicePlural: "szolgáltatás",
       ctaTitle: "Nem biztos, hol kezdje?",
       ctaSubtitle:
-        "Foglaljon konzultációt, és írásos kezelési tervet készítünk fix árajánlattal — kötelezettség nélkül.",
+        "Foglaljon konzultációt, és írásos kezelési tervet készítünk fix árajánlattal, kötelezettség nélkül.",
       bookConsultation: "Konzultáció foglalása",
     },
     privacy: {
@@ -675,7 +739,7 @@ export const MESSAGES = {
         },
         {
           heading: "Milyen adatokat kezelünk",
-          body: "Csak az időpontfoglaló űrlapon megadott adatokat gyűjtjük: keresztnév és vezetéknév, e-mail cím, telefonszám, születési dátum, lakcím, az opcionális megjegyzések, valamint a kiválasztott felület-nyelv. Ezen adatok egy része — a születési dátum és a megjegyzésekbe írt, egészségi állapotra vonatkozó információ — a GDPR 9. cikke szerinti különleges kategóriájú, egészségügyi adatnak minősül, és kizárólag az Ön fogászati ellátásának biztosítása céljából kezeljük. Nem használunk analitikai vagy hirdetési követőket, sem harmadik féltől származó sütiket. A nyelvi beállítást a böngészője localStorage-ában tároljuk, hogy a következő látogatáskor is emlékezzünk rá.",
+          body: "Csak az időpontfoglaló űrlapon megadott adatokat gyűjtjük: keresztnév és vezetéknév, e-mail cím, telefonszám, születési dátum, lakcím, az opcionális megjegyzések, valamint a kiválasztott felület-nyelv. Ezen adatok egy része, a születési dátum és a megjegyzésekbe írt, egészségi állapotra vonatkozó információ, a GDPR 9. cikke szerinti különleges kategóriájú, egészségügyi adatnak minősül, és kizárólag az Ön fogászati ellátásának biztosítása céljából kezeljük. Nem használunk analitikai vagy hirdetési követőket, sem harmadik féltől származó sütiket. A nyelvi beállítást a böngészője localStorage-ában tároljuk, hogy a következő látogatáskor is emlékezzünk rá.",
         },
         {
           heading: "Hogyan használjuk az adatait",
@@ -683,7 +747,7 @@ export const MESSAGES = {
         },
         {
           heading: "Az adatkezelés jogalapja",
-          body: "Személyes adatait a GDPR alábbi jogalapjai alapján kezeljük: (a) szerződés teljesítése és a szerződéskötést megelőző lépések megtétele az Ön kérésére — 6. cikk (1) bekezdés b) pont — az Ön által kért időpont biztosításához; (b) egészségügyi ellátás nyújtása — 9. cikk (2) bekezdés h) pont — a különleges kategóriájú egészségügyi adatok kezeléséhez (születési dátum, a megjegyzésekben szereplő klinikai információk); (c) jogos érdek — 6. cikk (1) bekezdés f) pont — a rendelő értesítése az időpontkérésről, és e-mail küldése Önnek a jóváhagyást követően; (d) jogi kötelezettség teljesítése — 6. cikk (1) bekezdés c) pont — az egészségügyi dokumentáció magyar jogszabályok által előírt megőrzése.",
+          body: "Személyes adatait a GDPR alábbi jogalapjai alapján kezeljük: (a) szerződés teljesítése és a szerződéskötést megelőző lépések megtétele az Ön kérésére, 6. cikk (1) bekezdés b) pont, az Ön által kért időpont biztosításához; (b) egészségügyi ellátás nyújtása, 9. cikk (2) bekezdés h) pont, a különleges kategóriájú egészségügyi adatok kezeléséhez (születési dátum, a megjegyzésekben szereplő klinikai információk); (c) jogos érdek, 6. cikk (1) bekezdés f) pont, a rendelő értesítése az időpontkérésről, és e-mail küldése Önnek a jóváhagyást követően; (d) jogi kötelezettség teljesítése, 6. cikk (1) bekezdés c) pont, az egészségügyi dokumentáció magyar jogszabályok által előírt megőrzése.",
         },
         {
           heading: "Ki fér hozzá",
@@ -695,11 +759,11 @@ export const MESSAGES = {
         },
         {
           heading: "Meddig őrizzük az adatait",
-          body: "A magyar egészségügyi jogszabályok — különösen az egészségügyi és a hozzájuk kapcsolódó személyes adatok kezeléséről szóló 1997. évi XLVII. törvény (Eüak. tv.) — előírják, hogy az egészségügyi dokumentációt legalább 30 évig, képalkotó felvételeket legalább 50 évig meg kell őriznünk a felvétel keletkezésétől számítva. Páciensnyilvántartását ezekre a törvényi időtartamokra őrizzük meg. Az egészségügyi dokumentációhoz nem tartozó kapcsolattartási adatokat kérésére töröljük. A törvényi megőrzési idő lejártát követően a nyilvántartásokat biztonságosan töröljük vagy teljes mértékben anonimizáljuk.",
+          body: "A magyar egészségügyi jogszabályok, különösen az egészségügyi és a hozzájuk kapcsolódó személyes adatok kezeléséről szóló 1997. évi XLVII. törvény (Eüak. tv.), előírják, hogy az egészségügyi dokumentációt legalább 30 évig, képalkotó felvételeket legalább 50 évig meg kell őriznünk a felvétel keletkezésétől számítva. Páciensnyilvántartását ezekre a törvényi időtartamokra őrizzük meg. Az egészségügyi dokumentációhoz nem tartozó kapcsolattartási adatokat kérésére töröljük. A törvényi megőrzési idő lejártát követően a nyilvántartásokat biztonságosan töröljük vagy teljes mértékben anonimizáljuk.",
         },
         {
           heading: "Az Ön jogai",
-          body: "A GDPR alapján jogosult személyes adataihoz való hozzáférést kérni, javításukat kezdeményezni, valamint — az egészségügyi dokumentációra vonatkozó kötelező megőrzési időre figyelemmel — kérni a törlésüket vagy az adatkezelés korlátozását. A jogos érdeken alapuló adatkezelés (például az időpontkéréssel kapcsolatos e-mailek) ellen tiltakozhat. Jogainak gyakorlásához írjon nekünk a lenti Kapcsolat részben megadott elérhetőségre.",
+          body: "A GDPR alapján jogosult személyes adataihoz való hozzáférést kérni, javításukat kezdeményezni, valamint, az egészségügyi dokumentációra vonatkozó kötelező megőrzési időre figyelemmel, kérni a törlésüket vagy az adatkezelés korlátozását. A jogos érdeken alapuló adatkezelés (például az időpontkéréssel kapcsolatos e-mailek) ellen tiltakozhat. Jogainak gyakorlásához írjon nekünk a lenti Kapcsolat részben megadott elérhetőségre.",
         },
         {
           heading: "Panasztételi jog",
@@ -818,7 +882,7 @@ export const MESSAGES = {
       eyebrow: "Orvos",
       title: "Másik időpont javaslása",
       subtitle:
-        "Válasszon egy szabad napot és időpontot. A páciens e-mailben kapja meg megerősítésre — ha nem megfelelő, a rendelő felhívására kérjük.",
+        "Válasszon egy szabad napot és időpontot. A páciens e-mailben kapja meg megerősítésre, ha nem megfelelő, a rendelő felhívására kérjük.",
       patient: "Páciens",
       requested: "Kért időpont",
       chooseDate: "Válasszon napot",

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,10 +16,13 @@ import {
 
 import { Button } from "@/components/ui/button";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useT } from "@/components/language-provider";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -67,57 +69,48 @@ const GALLERY = [
   "/office/05.jpg",
 ];
 
-type Review = { name: string; text: string };
-
-const FALLBACK_REVIEWS: Review[] = [
-  {
-    name: "Eszter Kr.",
-    text: "I had been putting off a check-up for years. The team at RadDent made me feel completely at ease and the result looks beautiful.",
-  },
-  {
-    name: "András P.",
-    text: "Implant treatment from start to finish in one place. Calm staff, very modern equipment, transparent pricing.",
-  },
-  {
-    name: "Réka B.",
-    text: "The cleanest, calmest dental practice I have ever been to. They explain everything before they do anything.",
-  },
-  {
-    name: "Dávid M.",
-    text: "Booked online, confirmed by email, and the whitening result was even better than I expected. Highly recommend.",
-  },
+// Photos for the team section, in the same order as `t.home.team`.
+// Use null for members without a photo yet — they get an initial placeholder.
+const TEAM_PHOTOS: (string | null)[] = [
+  "/team/amir-arshami.jpg",
+  "/my-photo.jpg", // Dr. Forouzan Babak
+  "/team/eva.jpg",
 ];
+
+function TeamPhoto({
+  src,
+  name,
+  sizes,
+  className = "",
+}: {
+  src: string | null | undefined;
+  name: string;
+  sizes: string;
+  className?: string;
+}) {
+  if (!src) {
+    return (
+      <div className="flex h-full min-h-full items-center justify-center bg-linear-to-br from-white/10 to-white/2">
+        <span className="text-7xl font-semibold text-white/30">
+          {name.replace(/^Dr\.\s*/, "")[0]}
+        </span>
+      </div>
+    );
+  }
+  return (
+    <Image
+      src={src}
+      alt={name}
+      fill
+      sizes={sizes}
+      className={`object-cover object-top ${className}`}
+    />
+  );
+}
 
 export function HomeContent() {
   const t = useT();
-  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
-
-  useEffect(() => {
-    let ignore = false;
-    (async () => {
-      try {
-        const response = await fetch("/api/reviews");
-        if (!response.ok) return;
-        const data = (await response.json()) as {
-          reviews?: Array<{ reviewerName: string; text: string }>;
-        };
-        if (ignore) return;
-        if (Array.isArray(data.reviews) && data.reviews.length > 0) {
-          setReviews(
-            data.reviews.slice(0, 4).map((r) => ({
-              name: r.reviewerName,
-              text: r.text,
-            })),
-          );
-        }
-      } catch {
-        // keep fallback reviews
-      }
-    })();
-    return () => {
-      ignore = true;
-    };
-  }, []);
+  const reviews = t.home.reviews;
 
   return (
     <main>
@@ -348,6 +341,87 @@ export function HomeContent() {
         </div>
       </section>
 
+      {/* Team */}
+      <section id="team" className="border-t border-white/5">
+        <div className="mx-auto max-w-6xl px-6 py-24 lg:px-8">
+          <div className="max-w-2xl">
+            <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
+              {t.home.teamEyebrow}
+            </span>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              {t.home.teamTitle}
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-300">
+              {t.home.teamSubtitle}
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {t.home.team.map((member, idx) => (
+              <Dialog key={member.name}>
+                <DialogTrigger asChild>
+                  <button
+                    type="button"
+                    className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/3 text-left transition hover:border-white/20 hover:bg-white/5 focus:outline-none focus-visible:border-white/30"
+                  >
+                    <div className="relative aspect-4/5 w-full overflow-hidden bg-slate-900">
+                      <TeamPhoto
+                        src={TEAM_PHOTOS[idx]}
+                        name={member.name}
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="transition duration-500 group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/10 to-transparent" />
+                      <div className="absolute inset-x-5 bottom-5">
+                        <h3 className="text-xl font-semibold text-white">
+                          {member.name}
+                        </h3>
+                        <p className="mt-1 text-sm text-slate-300">
+                          {member.role}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-1 flex-col gap-4 p-6">
+                      <p className="line-clamp-3 text-sm leading-6 text-slate-400">
+                        {member.bio}
+                      </p>
+                      <span className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-white">
+                        {t.home.teamReadMore}
+                        <ArrowRight className="size-4 transition group-hover:translate-x-1" />
+                      </span>
+                    </div>
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="max-h-[90vh] gap-0 overflow-hidden border border-white/10 bg-slate-950 p-0 text-white sm:max-w-3xl">
+                  <div className="grid max-h-[90vh] sm:grid-cols-[0.8fr_1.2fr]">
+                    <div className="relative hidden bg-slate-900 sm:block">
+                      <TeamPhoto
+                        src={TEAM_PHOTOS[idx]}
+                        name={member.name}
+                        sizes="(min-width: 640px) 320px, 0px"
+                      />
+                    </div>
+                    <div className="overflow-y-auto p-6 sm:p-8">
+                      <DialogHeader>
+                        <DialogTitle className="text-2xl font-semibold text-white">
+                          {member.name}
+                        </DialogTitle>
+                        <DialogDescription className="text-sm text-slate-400">
+                          {member.role}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <p className="mt-6 text-sm leading-7 whitespace-pre-line text-slate-300 sm:text-base sm:leading-7">
+                        {member.bio}
+                      </p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Reviews */}
       <section id="reviews" className="border-t border-white/5">
         <div className="mx-auto max-w-6xl px-6 py-24 lg:px-8">
@@ -376,59 +450,35 @@ export function HomeContent() {
             </Button>
           </div>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 columns-1 gap-4 sm:columns-2 lg:columns-3">
             {reviews.map((review) => (
-              <HoverCard key={review.name} openDelay={120} closeDelay={80}>
-                <HoverCardTrigger asChild>
-                  <figure
-                    tabIndex={0}
-                    className="flex h-full cursor-pointer flex-col gap-5 rounded-3xl border border-white/10 bg-white/3 p-6 transition hover:border-white/20 hover:bg-white/5 focus:outline-none focus-visible:border-white/30"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-0.5 text-white">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star key={i} className="size-4 fill-white" />
-                        ))}
-                      </div>
-                      <FacebookIcon className="size-4 text-slate-500" />
-                    </div>
-                    <blockquote className="line-clamp-5 text-sm leading-6 text-slate-200">
-                      &ldquo;{review.text}&rdquo;
-                    </blockquote>
-                    <figcaption className="mt-auto flex items-center gap-3 border-t border-white/5 pt-4">
-                      <span className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm font-medium text-white">
-                        {review.name[0]}
-                      </span>
-                      <div className="text-sm">
-                        <p className="font-medium text-white">{review.name}</p>
-                        <p className="text-xs text-slate-500">
-                          {t.home.reviewsViaFacebook}
-                        </p>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </HoverCardTrigger>
-                <HoverCardContent className="max-h-96 w-80 overflow-y-auto">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <span className="flex size-9 items-center justify-center rounded-full border border-border bg-muted text-sm font-medium text-foreground">
-                        {review.name[0]}
-                      </span>
-                      <div className="text-sm">
-                        <p className="font-medium text-foreground">
-                          {review.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {t.home.reviewsViaFacebook}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm leading-6 text-foreground">
-                      &ldquo;{review.text}&rdquo;
+              <figure
+                key={review.name}
+                className="mb-4 flex break-inside-avoid flex-col gap-5 rounded-3xl border border-white/10 bg-white/3 p-6 transition hover:border-white/20 hover:bg-white/5"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-0.5 text-white">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="size-4 fill-white" />
+                    ))}
+                  </div>
+                  <FacebookIcon className="size-4 text-slate-500" />
+                </div>
+                <blockquote className="text-sm leading-6 text-slate-200">
+                  &ldquo;{review.text}&rdquo;
+                </blockquote>
+                <figcaption className="flex items-center gap-3 border-t border-white/5 pt-4">
+                  <span className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm font-medium text-white">
+                    {review.name[0]}
+                  </span>
+                  <div className="text-sm">
+                    <p className="font-medium text-white">{review.name}</p>
+                    <p className="text-xs text-slate-500">
+                      {t.home.reviewsViaFacebook}
                     </p>
                   </div>
-                </HoverCardContent>
-              </HoverCard>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
