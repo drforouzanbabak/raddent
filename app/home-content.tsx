@@ -71,11 +71,66 @@ const GALLERY = [
 
 // Photos for the team section, in the same order as `t.home.team`.
 // Use null for members without a photo yet — they get an initial placeholder.
+// The first member is the clinic owner and gets the featured card.
 const TEAM_PHOTOS: (string | null)[] = [
-  "/team/amir-arshami.jpg",
   "/my-photo.jpg", // Dr. Forouzan Babak
+  "/team/amir-arshami.jpg",
   "/team/eva.jpg",
 ];
+
+type TeamMember = { name: string; role: string; bio: string };
+
+function TeamDialog({
+  member,
+  photo,
+  badge,
+  children,
+}: {
+  member: TeamMember;
+  photo: string | null | undefined;
+  badge?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="max-h-[90vh] gap-0 overflow-hidden border border-white/10 bg-slate-950 p-0 text-white sm:max-w-3xl">
+        <div className="grid max-h-[90vh] sm:grid-cols-[0.8fr_1.2fr]">
+          <div className="relative hidden bg-slate-900 sm:block">
+            <TeamPhoto
+              src={photo}
+              name={member.name}
+              sizes="(min-width: 640px) 320px, 0px"
+            />
+          </div>
+          <div className="overflow-y-auto p-6 sm:p-8">
+            <DialogHeader>
+              {badge && <OwnerBadge label={badge} />}
+              <DialogTitle className="text-2xl font-semibold text-white">
+                {member.name}
+              </DialogTitle>
+              <DialogDescription className="text-sm text-slate-400">
+                {member.role}
+              </DialogDescription>
+            </DialogHeader>
+            <p className="mt-6 text-sm leading-7 whitespace-pre-line text-slate-300 sm:text-base sm:leading-7">
+              {member.bio}
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function OwnerBadge({ label }: { label: string }) {
+  return (
+    <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-amber-200/30 bg-amber-200/10 px-3 py-1 text-xs font-medium tracking-wide text-amber-100">
+      <Crown className="size-3.5" />
+      {label}
+    </span>
+  );
+}
 
 function TeamPhoto({
   src,
@@ -356,10 +411,63 @@ export function HomeContent() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {t.home.team.map((member, idx) => (
-              <Dialog key={member.name}>
-                <DialogTrigger asChild>
+          {/* Featured: clinic owner */}
+          {t.home.team[0] && (
+            <TeamDialog
+              member={t.home.team[0]}
+              photo={TEAM_PHOTOS[0]}
+              badge={t.home.teamOwnerBadge}
+            >
+              <button
+                type="button"
+                className="group relative mt-14 block w-full text-left focus:outline-none"
+              >
+                <div
+                  aria-hidden
+                  className="absolute -inset-px rounded-[2.5rem] bg-linear-to-br from-amber-200/40 via-white/10 to-transparent opacity-70 blur-xl transition group-hover:opacity-100"
+                />
+                <div className="relative grid overflow-hidden rounded-[2.5rem] border border-amber-200/25 bg-slate-950 md:grid-cols-[0.85fr_1.15fr]">
+                  <div className="relative aspect-4/5 overflow-hidden bg-slate-900 md:aspect-auto md:min-h-112">
+                    <TeamPhoto
+                      src={TEAM_PHOTOS[0]}
+                      name={t.home.team[0].name}
+                      sizes="(min-width: 768px) 45vw, 100vw"
+                      className="transition duration-700 group-hover:scale-[1.03]"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent md:bg-linear-to-r md:from-transparent md:via-transparent md:to-slate-950/60" />
+                  </div>
+                  <div className="flex flex-col justify-center gap-5 bg-linear-to-br from-white/6 via-white/2 to-transparent p-8 sm:p-12">
+                    <OwnerBadge label={t.home.teamOwnerBadge} />
+                    <div>
+                      <h3 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                        {t.home.team[0].name}
+                      </h3>
+                      <p className="mt-2 text-base text-slate-300">
+                        {t.home.team[0].role}
+                      </p>
+                    </div>
+                    <p className="line-clamp-5 text-sm leading-7 text-slate-400 sm:text-base">
+                      {t.home.team[0].bio}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-sm font-medium text-amber-100">
+                      {t.home.teamReadMore}
+                      <ArrowRight className="size-4 transition group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </TeamDialog>
+          )}
+
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {t.home.team.slice(1).map((member, i) => {
+              const idx = i + 1;
+              return (
+                <TeamDialog
+                  key={member.name}
+                  member={member}
+                  photo={TEAM_PHOTOS[idx]}
+                >
                   <button
                     type="button"
                     className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/3 text-left transition hover:border-white/20 hover:bg-white/5 focus:outline-none focus-visible:border-white/30"
@@ -391,33 +499,9 @@ export function HomeContent() {
                       </span>
                     </div>
                   </button>
-                </DialogTrigger>
-                <DialogContent className="max-h-[90vh] gap-0 overflow-hidden border border-white/10 bg-slate-950 p-0 text-white sm:max-w-3xl">
-                  <div className="grid max-h-[90vh] sm:grid-cols-[0.8fr_1.2fr]">
-                    <div className="relative hidden bg-slate-900 sm:block">
-                      <TeamPhoto
-                        src={TEAM_PHOTOS[idx]}
-                        name={member.name}
-                        sizes="(min-width: 640px) 320px, 0px"
-                      />
-                    </div>
-                    <div className="overflow-y-auto p-6 sm:p-8">
-                      <DialogHeader>
-                        <DialogTitle className="text-2xl font-semibold text-white">
-                          {member.name}
-                        </DialogTitle>
-                        <DialogDescription className="text-sm text-slate-400">
-                          {member.role}
-                        </DialogDescription>
-                      </DialogHeader>
-                      <p className="mt-6 text-sm leading-7 whitespace-pre-line text-slate-300 sm:text-base sm:leading-7">
-                        {member.bio}
-                      </p>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            ))}
+                </TeamDialog>
+              );
+            })}
           </div>
         </div>
       </section>

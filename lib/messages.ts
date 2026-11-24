@@ -16,6 +16,7 @@ export const MESSAGES = {
       prices: "Prices",
       faq: "FAQ",
       reviews: "Reviews",
+      team: "Our team",
       contact: "Contact",
     },
     faq: {
@@ -136,19 +137,20 @@ export const MESSAGES = {
       ],
       teamEyebrow: "Our team",
       teamReadMore: "Read more",
+      teamOwnerBadge: "Founder & lead dentist",
       teamTitle: "Meet the people behind your smile.",
       teamSubtitle:
         "Experienced specialists who plan every treatment together, so you always get the right expert for your case.",
       team: [
         {
-          name: "Dr. Amir Arshami",
-          role: "Dentist, general physician, implantologist",
-          bio: "As a dentist and general physician, I have been working in dental implantology for nearly ten years, with a particular focus on complex oral rehabilitation. My specialty is restoring complete tooth loss with implants, especially using the All-on-4 and All-on-X techniques. I have significant experience in bone grafting procedures and complex implant treatments. My goal is to give my patients long-lasting, stable, functional and aesthetic solutions using the most modern procedures, restoring the joy of a confident smile and comfortable chewing.",
-        },
-        {
           name: "Dr. Forouzan Babak",
           role: "Dentist",
           bio: "I earned my dental degree at Semmelweis University and have been practising as a dentist since 2014.\n\nIn my work, what matters most to me is respect for human dignity and understanding my patients' pain, fears and concerns. I recommend to everyone the treatment I would choose for my own family member in a similar situation.\n\nAesthetic dentistry is especially close to my heart, because after these treatments I have seen many sincere, heartfelt smiles. It is a great joy when someone gains not only a more beautiful smile but also new self-confidence.\n\nOver the years, my patients' trust has been the greatest value to me. That is why I strive to keep pain and stress to a minimum during treatment, so that every patient feels: I am listening, I understand, and they are safe.",
+        },
+        {
+          name: "Dr. Amir Arshami",
+          role: "Dentist, general physician, implantologist",
+          bio: "As a dentist and general physician, I have been working in dental implantology for nearly ten years, with a particular focus on complex oral rehabilitation. My specialty is restoring complete tooth loss with implants, especially using the All-on-4 and All-on-X techniques. I have significant experience in bone grafting procedures and complex implant treatments. My goal is to give my patients long-lasting, stable, functional and aesthetic solutions using the most modern procedures, restoring the joy of a confident smile and comfortable chewing.",
         },
         {
           name: "Éva",
@@ -460,6 +462,7 @@ export const MESSAGES = {
       prices: "Árak",
       faq: "GYIK",
       reviews: "Vélemények",
+      team: "Csapatunk",
       contact: "Kapcsolat",
     },
     faq: {
@@ -580,19 +583,20 @@ export const MESSAGES = {
       ],
       teamEyebrow: "Munkatársaink",
       teamReadMore: "Tovább olvasom",
+      teamOwnerBadge: "Alapító, vezető fogorvos",
       teamTitle: "Ismerje meg csapatunkat.",
       teamSubtitle:
         "Tapasztalt szakemberek, akik minden kezelést közösen terveznek meg, így mindig a megfelelő szakértő foglalkozik Önnel.",
       team: [
         {
-          name: "Dr. Amir Arshami",
-          role: "Fogorvos, általános orvos, implantológus",
-          bio: "Fogorvosként és általános orvosként közel tíz éve foglalkozom dentális implantológiával, különös hangsúlyt fektetve a komplex szájrehabilitációkra. Szakterületem a teljes foghiány implantátumokkal történő helyreállítása, különösen az All-on-4 és All-on-X technikák alkalmazásával. Jelentős tapasztalattal rendelkezem a csontpótló beavatkozások, valamint az összetett implantológiai kezelések területén. Célom, hogy pácienseim számára a legmodernebb eljárások segítségével hosszú távon stabil, funkcionális és esztétikus megoldásokat biztosítsak, visszaadva számukra a magabiztos mosoly és a kényelmes rágás örömét.",
-        },
-        {
           name: "Dr. Forouzan Babak",
           role: "Fogorvos",
           bio: "A Semmelweis Egyetemen szereztem fogorvosi diplomát, és 2014 óta dolgozom fogorvosként.\n\nMunkám során a legfontosabb számomra az emberi méltóság tisztelete, valamint pácienseim fájdalmának, félelmeinek és aggodalmainak megértése. Mindenkinek olyan kezelést javaslok, amelyet hasonló helyzetben a saját családtagom számára is választanék.\n\nKülönösen közel áll hozzám az esztétikai fogászat, mert az ilyen kezelések után sok őszinte, szívből jövő mosolyt láthattam. Nagy öröm számomra, amikor valaki nemcsak szebb mosolyt, hanem új önbizalmat is kap.\n\nAz elmúlt években pácienseim bizalma jelentette számomra a legnagyobb értéket. Ezért arra törekszem, hogy a kezelések során a fájdalmat és a stresszt a lehető legkisebbre csökkentsem, és minden páciens érezze: figyelek rá, megértem, és biztonságban van.",
+        },
+        {
+          name: "Dr. Amir Arshami",
+          role: "Fogorvos, általános orvos, implantológus",
+          bio: "Fogorvosként és általános orvosként közel tíz éve foglalkozom dentális implantológiával, különös hangsúlyt fektetve a komplex szájrehabilitációkra. Szakterületem a teljes foghiány implantátumokkal történő helyreállítása, különösen az All-on-4 és All-on-X technikák alkalmazásával. Jelentős tapasztalattal rendelkezem a csontpótló beavatkozások, valamint az összetett implantológiai kezelések területén. Célom, hogy pácienseim számára a legmodernebb eljárások segítségével hosszú távon stabil, funkcionális és esztétikus megoldásokat biztosítsak, visszaadva számukra a magabiztos mosoly és a kényelmes rágás örömét.",
         },
         {
           name: "Éva",
